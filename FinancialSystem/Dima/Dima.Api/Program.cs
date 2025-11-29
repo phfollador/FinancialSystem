@@ -6,6 +6,10 @@ var app = builder.Build();
 // GET (nao tem corpo)
 // REQUEST -> cabecalho e corpo
 
-app.MapGet("/", () => "Hello World!");
+// endpoints - url para acesso (https://localhos:0000/)
+app.MapGet("/get", () => "Hello World!");
+app.MapPost("/post", () => "Hello World!");
+app.MapPut("/put", () => "Hello World!");
+app.MapDelete("/delete", () => "Hello World!");
 
 app.Run();
