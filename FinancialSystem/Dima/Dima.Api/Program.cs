@@ -7,9 +7,11 @@ var app = builder.Build();
 // REQUEST -> cabecalho e corpo
 
 // endpoints - url para acesso (https://localhos:0000/)
-app.MapGet("/get", () => "Hello World!");
-app.MapPost("/post", () => "Hello World!");
-app.MapPut("/put", () => "Hello World!");
-app.MapDelete("/delete", () => "Hello World!");
+app.MapGet("/", () => "Hello World!");
+app.MapPost("/", () => "Hello World!");
+app.MapPut("/", () => "Hello World!");
+app.MapDelete("/", () => "Hello World!");
 
+// versionamento: serao diversos fronts consumindo a api
+// mas pode haver alguma modificacao na api e determinada rota pode quebrar
 app.Run();
