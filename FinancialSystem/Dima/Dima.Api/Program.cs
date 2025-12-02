@@ -13,7 +13,7 @@ var app = builder.Build();
 
 app.MapPost(
     "/v1/transactions", 
-    () => new { message = "Hello" });
+    (Request request) => new Response { Id = 2, Title = "Nova transaction"}).Produces<Response>();
 
 app.Run();
 
@@ -26,4 +26,11 @@ public class Request
     public decimal Amount { get; set; }
     public long CategoryId { get; set; }
     public string UserId { get; set; } = string.Empty;
+}
+
+// Response
+public class Response
+{
+    public long Id { get; set; }
+    public string Title { get; set; } = string.Empty;
 }
