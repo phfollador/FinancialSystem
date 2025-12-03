@@ -13,7 +13,13 @@ var app = builder.Build();
 
 app.MapPost(
     "/v1/transactions", 
-    (Request request) => new Response { Id = 2, Title = "Nova transaction"}).Produces<Response>();
+    (Request request) => new Response 
+    { 
+        Id = 2, 
+        Title = "Nova transaction"
+    })
+    .WithName("Transactions: Create")
+    .Produces<Response>();
 
 app.Run();
 
