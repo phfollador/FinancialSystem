@@ -19,6 +19,7 @@ app.MapPost(
         Title = "Nova transaction"
     })
     .WithName("Transactions: Create")
+    .WithSummary("Cria uma nova transaction")
     .Produces<Response>();
 
 app.Run();
