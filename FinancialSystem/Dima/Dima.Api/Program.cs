@@ -13,11 +13,7 @@ var app = builder.Build();
 
 app.MapPost(
     "/v1/transactions", 
-    (Request request) => new Response 
-    { 
-        Id = 2, 
-        Title = "Nova transaction"
-    })
+    (Request request, Handler handler) => handler.handle(request)
     .WithName("Transactions: Create")
     .WithSummary("Cria uma nova transaction")
     .Produces<Response>();
@@ -40,4 +36,13 @@ public class Response
 {
     public long Id { get; set; }
     public string Title { get; set; } = string.Empty;
+}
+
+// Handler
+public class Handler()
+{
+    public Response handle(Request request)
+    {
+        return new Response { Id = 4, Title = request.Title};
+    }
 }
