@@ -13,7 +13,7 @@ var app = builder.Build();
 
 app.MapPost(
     "/v1/transactions", 
-    (Request request, Handler handler) => handler.handle(request)
+    (Request request, Handler handler) => handler.handle(request))
     .WithName("Transactions: Create")
     .WithSummary("Cria uma nova transaction")
     .Produces<Response>();
