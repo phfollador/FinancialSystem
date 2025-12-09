@@ -5,6 +5,9 @@ builder.Services.AddSwaggerGen(x => x.CustomSchemaIds(n => n.FullName)); // gera
 
 var app = builder.Build();
 
+app.UseSwagger();
+app.UseSwaggerUI();
+
 // Request
 // GET, POST, PUT & DELETE
 // GET (nao tem corpo)
