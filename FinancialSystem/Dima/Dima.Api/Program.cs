@@ -1,3 +1,5 @@
+using Dima.Core.Models;
+
 var builder = WebApplication.CreateBuilder(args);
 
 builder.Services.AddEndpointsApiExplorer();
