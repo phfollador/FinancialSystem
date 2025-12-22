@@ -10,7 +10,7 @@ var connectionString = builder
 
 builder.Services.AddDbContext<AppDbContext>(x =>
 {
-    x.UseSqlServer();
+    x.UseSqlServer(connectionString);
 });
 
 builder.Services.AddEndpointsApiExplorer();
