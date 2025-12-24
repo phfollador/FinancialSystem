@@ -33,10 +33,10 @@ app.UseSwaggerUI();
 // mas pode haver alguma modificacao na api e determinada rota pode quebrar
 
 app.MapPost(
-    "/v1/transactions", 
+    "/v1/categories", 
     (Request request, Handler handler) => handler.handle(request))
-    .WithName("Transactions: Create")
-    .WithSummary("Cria uma nova transaction")
+    .WithName("Categories: Create")
+    .WithSummary("Cria uma nova categoria")
     .Produces<Response>();
 
 app.Run();
@@ -45,11 +45,12 @@ app.Run();
 public class Request
 {
     public string Title { get; set; } = string.Empty;
-    public DateTime CreateAt { get; set; } = DateTime.Now;
-    public int Type { get; set; }
-    public decimal Amount { get; set; }
-    public long CategoryId { get; set; }
-    public string UserId { get; set; } = string.Empty;
+    public string Description { get; set; } = string.Empty;
+    //public DateTime CreateAt { get; set; } = DateTime.Now;
+    //public int Type { get; set; }
+    //public decimal Amount { get; set; }
+    //public long CategoryId { get; set; }
+    //public string UserId { get; set; } = string.Empty;
 }
 
 // Response
@@ -60,10 +61,19 @@ public class Response
 }
 
 // Handler
-public class Handler()
+public class Handler(AppDbContext context)
 {
     public Response handle(Request request)
     {
-        return new Response { Id = 4, Title = request.Title};
+        var category = new Category
+        {
+            Title = request.Title,
+            Description = request.Description
+        };
+
+        context.Categories.Add(category);
+        context.SaveChanges();
+
+        return new Response { Id = category.Id, Title = category.Title};
     }
 }
