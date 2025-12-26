@@ -10,8 +10,6 @@ namespace Dima.Core.Responses
     public class Response<T>
     {
         private readonly int code;
-        private const int defaultStatusCode = 200;
-
         public T? Data { get; set; }
         public string? Message { get; set; } = string.Empty;
 
@@ -21,10 +19,10 @@ namespace Dima.Core.Responses
         [JsonConstructor]
         public Response()
         {
-            code = defaultStatusCode;
+            code = Configuration.defaultStatusCode;
         }
 
-        public Response(T? data, int code = defaultStatusCode, string? message = null)
+        public Response(T? data, int code = Configuration.defaultStatusCode, string? message = null)
         {
             Data = data;
             Message = message;
