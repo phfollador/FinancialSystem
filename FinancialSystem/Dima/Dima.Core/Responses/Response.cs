@@ -11,8 +11,11 @@ namespace Dima.Core.Responses
     {
         private readonly int code;
         private const int defaultStatusCode = 200;
+
         public T? Data { get; set; }
         public string? Message { get; set; } = string.Empty;
+
+        [JsonIgnore]
         public bool IsSuccess => code is >= 200 and <= 299;
 
         [JsonConstructor]
