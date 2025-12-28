@@ -1,5 +1,7 @@
 using Dima.Api.Data;
 using Dima.Core.Models;
+using Dima.Core.Requests.Categories;
+using Dima.Core.Responses;
 using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -34,9 +36,9 @@ app.UseSwaggerUI();
 
 app.MapPost(
     "/v1/categories", 
-    (Request request, Handler handler) => handler.handle(request))
+    (CreateCategoryRequest request, Handler handler) => handler.handle(request))
     .WithName("Categories: Create")
     .WithSummary("Cria uma nova categoria")
-    .Produces<Response>();
+    .Produces<Response<Category>>();
 
 app.Run();
