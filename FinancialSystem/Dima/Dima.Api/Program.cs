@@ -42,9 +42,3 @@ app.MapPost(
     .Produces<Response<Category>>();
 
 app.Run();
-
-// validar request
-// verificar se a categoria ja existe
-// inserir categoria no banco
-// montar a resposta
-// retornar a resposta
