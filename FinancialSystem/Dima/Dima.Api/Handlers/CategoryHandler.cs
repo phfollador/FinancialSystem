@@ -1,15 +1,34 @@
-﻿using Dima.Core.Handlers;
+﻿using Dima.Api.Data;
+using Dima.Core.Handlers;
 using Dima.Core.Models;
 using Dima.Core.Requests.Categories;
 using Dima.Core.Responses;
 
 namespace Dima.Api.Handlers
 {
-    public class CategoryHandler : ICategoryHandler
+    public class CategoryHandler(AppDbContext context) : ICategoryHandler
     {
-        public Task<Response<Category>> CreateAsync(CreateCategoryRequest request)
+        public async Task<Response<Category>> CreateAsync(CreateCategoryRequest request)
         {
-            throw new NotImplementedException();
+            try
+            {
+                var category = new Category
+                {
+                    UserId = request.UserId,
+                    Title = request.Title,
+                    Description = request.Description,
+                };
+
+                await context.Categories.AddAsync(category);
+                await context.SaveChangesAsync();
+
+                return new Response<Category>(category);
+            }
+            catch (Exception ex) 
+            {
+                Console.WriteLine(ex.Message);
+                throw new Exception("Falha ao criar a categoria");
+            }
         }
 
         public Task<Response<Category>> DeleteAsync(DeleteCategoryRequest request)
