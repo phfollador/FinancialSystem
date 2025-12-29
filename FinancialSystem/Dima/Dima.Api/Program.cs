@@ -26,16 +26,6 @@ var app = builder.Build();
 app.UseSwagger();
 app.UseSwaggerUI();
 
-// Request
-// GET, POST, PUT & DELETE
-// GET (nao tem corpo)
-// REQUEST -> cabecalho e corpo
-
-// endpoints - url para acesso (https://localhos:0000/)
-
-// versionamento: serao diversos fronts consumindo a api
-// mas pode haver alguma modificacao na api e determinada rota pode quebrar
-
 app.MapPost(
     "/v1/categories", 
     (CreateCategoryRequest request, ICategoryHandler handler) => handler.CreateAsync(request))
