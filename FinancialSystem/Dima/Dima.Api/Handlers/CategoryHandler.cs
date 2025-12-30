@@ -56,9 +56,21 @@ namespace Dima.Api.Handlers
             throw new NotImplementedException();
         }
 
-        public Task<Response<Category?>> GetByIdAsync(GetCategoryByIdRequest request)
+        public async Task<Response<Category?>> GetByIdAsync(GetCategoryByIdRequest request)
         {
-            throw new NotImplementedException();
+            try
+            {
+                var category = await context.Categories.FirstOrDefaultAsync(x => x.Id == request.Id && x.UserId == request.UserId);
+
+                if (category == null)
+                    return new Response<Category?>(null, 404, "Categoria nao encontrada");
+
+                return new Response<Category?>(category, message: "Categoria obtida com sucesso");
+            }
+            catch
+            {
+                return new Response<Category?>(null, 500, "Nao foi possivel obter a categoria");
+            }
         }
 
         public async Task<Response<Category?>> UpdateAsync(UpdateCategoryRequest request)
