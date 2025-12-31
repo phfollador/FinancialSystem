@@ -56,10 +56,10 @@ namespace Dima.Api.Handlers
         {
             try
             {
-                var query = context.Categories.AsNoTracking().Where(x => x.UserId == request.UserId);
+                var query = context.Categories.AsNoTracking().Where(x => x.UserId == request.UserId).OrderBy(x => x.Title);
 
                 var categories = await query
-                    .Skip(request.PageSize * request.PageNumber)
+                    .Skip((request.PageNumber - 1) * request.PageSize)
                     .Take(request.PageSize)
                     .ToListAsync();
 
