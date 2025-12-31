@@ -81,4 +81,19 @@ app.MapGet(
     .WithSummary("Retorna uma categoria")
     .Produces<Response<Category?>>();
 
+app.MapGet(
+    "/v1/categories",
+    async (ICategoryHandler handler)
+    =>
+    {
+        var request = new GetAllCategoriesRequest
+        {
+            UserId = "teste@pedro"
+        };
+        return await handler.GetAllAsync(request);
+    })
+    .WithName("Categories: GetAll")
+    .WithSummary("Retorna todas as categorias de um usuario")
+    .Produces<PagedResponse<List<Category>?>>();
+
 app.Run();

@@ -1,4 +1,5 @@
 ﻿using Dima.Api.Data;
+using Dima.Core;
 using Dima.Core.Handlers;
 using Dima.Core.Models;
 using Dima.Core.Requests.Categories;
@@ -51,9 +52,29 @@ namespace Dima.Api.Handlers
             }
         }
 
-        public Task<Response<List<Category>>> GetAllAsync(GetAllCategoriesRequest request)
+        public async Task<PagedResponse<List<Category>?>> GetAllAsync(GetAllCategoriesRequest request)
         {
-            throw new NotImplementedException();
+            try
+            {
+                var query = context.Categories.AsNoTracking().Where(x => x.UserId == request.UserId);
+
+                var categories = await query
+                    .Skip(request.PageSize * request.PageNumber)
+                    .Take(request.PageSize)
+                    .ToListAsync();
+
+                var count = await query
+                    .CountAsync();
+
+                if (categories == null)
+                    return new PagedResponse<List<Category>?>(null, 500, "O usuario nao possui nenhuma categoria");
+
+                return new PagedResponse<List<Category>?>(categories, count, request.PageNumber, request.PageSize);
+            }
+            catch
+            {
+                return new PagedResponse<List<Category>?>(null, 500, "Nao foi possivel consultar as categorias");
+            }
         }
 
         public async Task<Response<Category?>> GetByIdAsync(GetCategoryByIdRequest request)
@@ -61,7 +82,7 @@ namespace Dima.Api.Handlers
             try
             {
                 var category = await context.Categories.AsNoTracking().FirstOrDefaultAsync(x => x.Id == request.Id && x.UserId == request.UserId);
-
+                
                 if (category == null)
                     return new Response<Category?>(null, 404, "Categoria nao encontrada");
 
