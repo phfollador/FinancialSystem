@@ -53,7 +53,10 @@ app.MapDelete (
     ICategoryHandler handler) 
     =>
     {
-        var request = new DeleteCategoryRequest();
+        var request = new DeleteCategoryRequest 
+        {
+            Id = id
+        };
         return await handler.DeleteAsync(request);
     })
     .WithName("Categories: Delete")
