@@ -1,12 +1,18 @@
 ﻿using Dima.Api.Data.Common.Api;
+using Dima.Core.Handlers;
+using Dima.Core.Models;
+using Dima.Core.Requests.Categories;
+using Dima.Core.Responses;
 
 namespace Dima.Api.Endpoints.Categories
 {
     public class CreateCategoryEndpoint : IEndpoint
     {
-        public static void Map(IEndpointRouteBuilder app)
+        public static void Map(IEndpointRouteBuilder app) => app.MapPost("", HandleAsync).Produces<Response<Category?>>();
+
+        public static async Task<IResult> HandleAsync(ICategoryHandler handler, CreateCategoryRequest request)
         {
-            throw new NotImplementedException();
+            return Results.BadRequest();
         }
     }
 }
