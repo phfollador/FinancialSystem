@@ -3,6 +3,7 @@ using Dima.Core.Handlers;
 using Dima.Core.Models;
 using Dima.Core.Requests.Categories;
 using Dima.Core.Responses;
+using Microsoft.Identity.Client;
 
 namespace Dima.Api.Endpoints.Categories
 {
@@ -12,6 +13,11 @@ namespace Dima.Api.Endpoints.Categories
 
         public static async Task<IResult> HandleAsync(ICategoryHandler handler, CreateCategoryRequest request)
         {
+            var result = await handler.CreateAsync(request);
+
+            if(result.IsSuccess)
+                return Results.Created($"/{result.Data.Id}", result.Data);
+
             return Results.BadRequest();
         }
     }
