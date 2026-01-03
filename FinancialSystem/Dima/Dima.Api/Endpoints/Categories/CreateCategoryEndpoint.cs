@@ -16,7 +16,7 @@ namespace Dima.Api.Endpoints.Categories
             var result = await handler.CreateAsync(request);
 
             if(result.IsSuccess)
-                return Results.Created($"/{result.Data.Id}", result.Data);
+                return Results.Created($"/{result.Data?.Id}", result?.Data);
 
             return Results.BadRequest();
         }
