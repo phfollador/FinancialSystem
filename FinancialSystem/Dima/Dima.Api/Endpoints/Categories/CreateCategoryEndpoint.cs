@@ -14,7 +14,8 @@ namespace Dima.Api.Endpoints.Categories
             .WithName("Categories: Create")
             .WithSummary("Cria uma nova categoria")
             .WithDescription("Cria uma nova categoria")
-            .WithOrder(1);
+            .WithOrder(1)
+            .Produces<Response<Category?>>();
 
         public static async Task<IResult> HandleAsync(ICategoryHandler handler, CreateCategoryRequest request)
         {
