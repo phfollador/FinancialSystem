@@ -1,4 +1,5 @@
 using Dima.Api.Data;
+using Dima.Api.Endpoints;
 using Dima.Api.Handlers;
 using Dima.Core.Handlers;
 using Dima.Core.Models;
@@ -25,6 +26,9 @@ var app = builder.Build();
 
 app.UseSwagger();
 app.UseSwaggerUI();
+
+app.MapGet("/", () => new { message = "OK" });
+app.MapEndpoints();
 
 app.MapPost(
     "/v1/categories",
