@@ -11,7 +11,13 @@ namespace Dima.Api.Endpoints
         {
             var endpoints = app.MapGroup("");
 
-            endpoints.MapGroup("v1/categories").WithTags("Categories").MapEndpoint<CreateCategoryEndpoint>();
+            endpoints.MapGroup("v1/categories")
+                .WithTags("Categories")
+                .MapEndpoint<CreateCategoryEndpoint>()
+                .MapEndpoint<UpdateCategoryEndpoint>()
+                .MapEndpoint<DeleteCategoryEndpoint>()
+                .MapEndpoint<GetCategoryByIdEndpoint>()
+                .MapEndpoint<GetAllCategoriesEndpoint>();
         }
 
         private static IEndpointRouteBuilder MapEndpoint<TEndpoint>(this IEndpointRouteBuilder app) where TEndpoint : IEndpoint

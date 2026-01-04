@@ -27,9 +27,9 @@ namespace Dima.Api.Endpoints.Categories
             var result = await handler.DeleteAsync(request);
 
             if (result.IsSuccess)
-                return TypedResults.Ok(result?.Data);
+                return TypedResults.Ok(result);
 
-            return TypedResults.BadRequest();
+            return TypedResults.BadRequest(result);
         }
     }
 }
