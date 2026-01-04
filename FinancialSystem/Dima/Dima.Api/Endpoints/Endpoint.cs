@@ -6,7 +6,7 @@ namespace Dima.Api.Endpoints
 {
     public static class Endpoint
     {
-        // extensio method
+        // extension method
         public static void MapEndpoints(this WebApplication app)
         {
             var endpoints = app.MapGroup("");
