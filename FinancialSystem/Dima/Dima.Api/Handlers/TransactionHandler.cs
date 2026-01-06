@@ -3,6 +3,7 @@ using Dima.Core.Handlers;
 using Dima.Core.Models;
 using Dima.Core.Requests.Transactions;
 using Dima.Core.Responses;
+using Microsoft.EntityFrameworkCore;
 
 namespace Dima.Api.Handlers
 {
@@ -49,9 +50,33 @@ namespace Dima.Api.Handlers
             throw new NotImplementedException();
         }
 
-        public Task<Response<Transaction?>> UpdateAsync(UpdateTransactionRequest request)
+        public async Task<Response<Transaction?>> UpdateAsync(UpdateTransactionRequest request)
         {
-            throw new NotImplementedException();
+            try
+            {
+                var transaction = await context.Transactions.FirstOrDefaultAsync(x => x.UserId == request.UserId && x.Id == request.Id);
+
+                if (transaction == null)
+                    return new Response<Transaction?>(null, 404, "Nao foi possivel recuperar uma transacao");
+
+                //transaction.UserId = request.UserId;
+                //transaction.Id = request.Id;
+                //transaction.CategoryId = request.CategoryId;
+                //transaction.CreateAt = DateTime.UtcNow;
+                //transaction.Amount = request.Amount;
+                //transaction.PaidOrReceivedAt = request.PaidOrReceivedAt;
+                //transaction.Title = request.Title;
+                //transaction.Type = request.Type;
+
+                context.Transactions.Update(transaction);
+                await context.SaveChangesAsync();
+
+                return new Response<Transaction?>(transaction);
+            }
+            catch
+            {
+                return new Response<Transaction?>(null, 500, "Nao foi possivel atualizar uma transacao");
+            }
         }
     }
 }
