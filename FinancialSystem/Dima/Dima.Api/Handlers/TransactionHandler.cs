@@ -35,9 +35,24 @@ namespace Dima.Api.Handlers
             }
         }
 
-        public Task<Response<Transaction?>> DeleteAsync(DeleteTransactionRequest request)
+        public async Task<Response<Transaction?>> DeleteAsync(DeleteTransactionRequest request)
         {
-            throw new NotImplementedException();
+            try
+            {
+                var transaction = await context.Transactions.FirstOrDefaultAsync(x => x.UserId == request.UserId && x.Id == request.Id);
+
+                if (transaction == null)
+                    return new Response<Transaction?>(null, 404, "Nao foi possivel recuperar uma transacao");
+
+                context.Transactions.Remove(transaction);
+                await context.SaveChangesAsync();
+
+                return new Response<Transaction?>(transaction);
+            }
+            catch
+            {
+                return new Response<Transaction?>(null, 500, "Nao foi possivel remover uma transacao");
+            }
         }
 
         public Task<Response<Transaction?>> GetByIdAsync(GetTransactionByIdRequest request)
@@ -59,14 +74,11 @@ namespace Dima.Api.Handlers
                 if (transaction == null)
                     return new Response<Transaction?>(null, 404, "Nao foi possivel recuperar uma transacao");
 
-                //transaction.UserId = request.UserId;
-                //transaction.Id = request.Id;
-                //transaction.CategoryId = request.CategoryId;
-                //transaction.CreateAt = DateTime.UtcNow;
-                //transaction.Amount = request.Amount;
-                //transaction.PaidOrReceivedAt = request.PaidOrReceivedAt;
-                //transaction.Title = request.Title;
-                //transaction.Type = request.Type;
+                transaction.CategoryId = request.CategoryId;
+                transaction.Amount = request.Amount;
+                transaction.PaidOrReceivedAt = request.PaidOrReceivedAt;
+                transaction.Title = request.Title;
+                transaction.Type = request.Type;
 
                 context.Transactions.Update(transaction);
                 await context.SaveChangesAsync();
