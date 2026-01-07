@@ -55,9 +55,21 @@ namespace Dima.Api.Handlers
             }
         }
 
-        public Task<Response<Transaction?>> GetByIdAsync(GetTransactionByIdRequest request)
+        public async Task<Response<Transaction?>> GetByIdAsync(GetTransactionByIdRequest request)
         {
-            throw new NotImplementedException();
+            try
+            {
+                var transaction = await context.Transactions.FirstOrDefaultAsync(x => x.UserId == request.UserId && x.Id == request.Id);
+
+                if (transaction == null)
+                    return new Response<Transaction?>(null, 404, "Nao foi possivel recuperar uma transacao");
+
+                return new Response<Transaction?>(transaction);
+            }
+            catch
+            {
+                return new Response<Transaction?>(null, 500, "Nao foi possivel obter uma transacao");
+            }
         }
 
         public Task<PagedResponse<List<Transaction>?>> GetByPeriodAsync(GetTransactionsByPeriodRequest request)
