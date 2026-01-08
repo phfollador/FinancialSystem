@@ -1,5 +1,6 @@
 ﻿using Dima.Api.Data.Common.Api;
 using Dima.Api.Endpoints.Categories;
+using Dima.Api.Endpoints.Transactions;
 using Microsoft.AspNetCore.Cors.Infrastructure;
 
 namespace Dima.Api.Endpoints
@@ -18,6 +19,14 @@ namespace Dima.Api.Endpoints
                 .MapEndpoint<DeleteCategoryEndpoint>()
                 .MapEndpoint<GetCategoryByIdEndpoint>()
                 .MapEndpoint<GetAllCategoriesEndpoint>();
+
+            endpoints.MapGroup("v1/transactions")
+                .WithTags("Transactions")
+                .MapEndpoint<CreateTransactionEndpoint>()
+                .MapEndpoint<UpdateTransactionEndpoint>()
+                .MapEndpoint<DeleteTransactionEndpoint>()
+                .MapEndpoint<GetTransactionByIdEndpoint>()
+                .MapEndpoint<GetTransactionByPeriodEndpoint>();
         }
 
         private static IEndpointRouteBuilder MapEndpoint<TEndpoint>(this IEndpointRouteBuilder app) where TEndpoint : IEndpoint
