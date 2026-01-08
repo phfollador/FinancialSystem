@@ -10,7 +10,7 @@ namespace Dima.Api.Endpoints.Transactions
     public class DeleteTransactionEndpoint : IEndpoint
     {
         public static void Map(IEndpointRouteBuilder app)
-            => app.MapPost("", HandleAsync)
+            => app.MapDelete("{id}", HandleAsync)
             .WithName("Transactions: Delete")
             .WithSummary("Remove uma transaction")
             .WithDescription("Remove uma transaction")
