@@ -1,4 +1,5 @@
 ﻿using Dima.Api.Data;
+using Dima.Core.Common.Extensions;
 using Dima.Core.Handlers;
 using Dima.Core.Models;
 using Dima.Core.Requests.Transactions;
@@ -72,9 +73,42 @@ namespace Dima.Api.Handlers
             }
         }
 
-        public Task<PagedResponse<List<Transaction>?>> GetByPeriodAsync(GetTransactionsByPeriodRequest request)
+        public async Task<PagedResponse<List<Transaction>?>> GetByPeriodAsync(GetTransactionsByPeriodRequest request)
         {
-            throw new NotImplementedException();
+            try
+            {
+                request.StartDate ??= DateTime.Now.GetFirstDate();
+                request.EndDate ??= DateTime.Now.GetLastDate();
+            }
+            catch
+            {
+                return new PagedResponse<List<Transaction>?>(null, 500, "Nao foi possivel determinar uma data de inicio ou termino");
+            }
+
+            try
+            {
+                var query = context.Transactions
+                    .AsNoTracking()
+                    .Where(x => x.CreateAt >= request.StartDate && x.CreateAt <= request.EndDate && x.UserId == request.UserId)
+                    .OrderBy(x => x.CreateAt);
+
+                var transactions = await query
+                    .Skip((request.PageNumber - 1) * request.PageSize)
+                    .Take(request.PageSize)
+                    .ToListAsync();
+
+                var count = await query
+                    .CountAsync();
+
+                if (transactions == null)
+                    return new PagedResponse<List<Transaction>?>(null, 500, "Nenhuma transacao foi encontrada");
+
+                return new PagedResponse<List<Transaction>?>(transactions, count, request.PageNumber, request.PageSize);
+            }
+            catch
+            {
+                return new PagedResponse<List<Transaction>?>(null, 500, "Nao foi possivel consultar as trasacoes");
+            }
         }
 
         public async Task<Response<Transaction?>> UpdateAsync(UpdateTransactionRequest request)
