@@ -23,6 +23,9 @@ builder.Services.AddSwaggerGen(x => x.CustomSchemaIds(n => n.FullName)); // gera
 builder.Services.AddTransient<ICategoryHandler, CategoryHandler>();
 builder.Services.AddTransient<ITransactionHandler, TransactionHandler>();
 
+builder.Services.AddAuthentication();
+builder.Services.AddAuthorization();
+
 var app = builder.Build();
 
 app.UseSwagger();
