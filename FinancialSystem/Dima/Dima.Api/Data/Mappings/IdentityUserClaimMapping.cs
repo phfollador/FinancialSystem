@@ -4,7 +4,7 @@ using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
 namespace Dima.Api.Data.Mappings
 {
-    public class IdentityUserClaim : IEntityTypeConfiguration<IdentityUserClaim<long>>
+    public class IdentityUserClaimMapping : IEntityTypeConfiguration<IdentityUserClaim<long>>
     {
         public void Configure(EntityTypeBuilder<IdentityUserClaim<long>> builder)
         {
