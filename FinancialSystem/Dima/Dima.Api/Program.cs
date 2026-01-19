@@ -41,6 +41,10 @@ app.UseSwaggerUI();
 app.MapGet("/", () => new { message = "OK" });
 app.MapEndpoints();
 
-app.MapGroup("v1/identity").WithTags("Identity").MapIdentityApi<User>();
+app.MapGroup("v1/identity").WithTags("Identity").MapPost("/logout", async (SignInManager<User> signInManager) => 
+{
+    await signInManager.SignOutAsync();
+    return Results.Ok();
+});
 
 app.Run();
