@@ -45,6 +45,6 @@ app.MapGroup("v1/identity").WithTags("Identity").MapPost("/logout", async (SignI
 {
     await signInManager.SignOutAsync();
     return Results.Ok();
-});
+}).RequireAuthorization();
 
 app.Run();
