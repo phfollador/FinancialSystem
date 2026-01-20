@@ -8,6 +8,7 @@ using Dima.Core.Requests.Categories;
 using Dima.Core.Responses;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
+using System.Security.Claims;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -41,9 +42,11 @@ app.UseSwaggerUI();
 app.MapGet("/", () => new { message = "OK" });
 app.MapEndpoints();
 
-app.MapGroup("v1/identity").WithTags("Identity").MapPost("/logout", async (SignInManager<User> signInManager) => 
+app.MapGroup("v1/identity").WithTags("Identity").MapPost("/logout", async (ClaimsPrincipal user) => 
 {
-    await signInManager.SignOutAsync();
+    if (user.Identity is null || !user.Identity.IsAuthenticated)
+        return Results.Unauthorized();
+
     return Results.Ok();
 }).RequireAuthorization();
 
