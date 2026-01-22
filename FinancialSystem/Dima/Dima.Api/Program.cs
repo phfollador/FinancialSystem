@@ -42,7 +42,7 @@ app.UseSwaggerUI();
 app.MapGet("/", () => new { message = "OK" });
 app.MapEndpoints();
 
-app.MapGroup("v1/identity").WithTags("Identity").MapPost("/logout", async (ClaimsPrincipal user) => 
+app.MapGroup("v1/identity").WithTags("Identity").MapGet("/roles", async (ClaimsPrincipal user) => 
 {
     if (user.Identity is null || !user.Identity.IsAuthenticated)
         return Results.Unauthorized();
