@@ -1,9 +1,11 @@
 ﻿using Dima.Api.Data.Common.Api;
+using Dima.Api.Models;
 using Dima.Core.Handlers;
 using Dima.Core.Models;
 using Dima.Core.Requests.Categories;
 using Dima.Core.Requests.Transactions;
 using Dima.Core.Responses;
+using System.Security.Claims;
 
 namespace Dima.Api.Endpoints.Transactions
 {
@@ -17,12 +19,12 @@ namespace Dima.Api.Endpoints.Transactions
             .WithOrder(4)
             .Produces<Response<Transaction?>>();
 
-        private static async Task<IResult> HandleAsync(ITransactionHandler handler, long id)
+        private static async Task<IResult> HandleAsync(ClaimsPrincipal user, ITransactionHandler handler, long id)
         {
             var request = new GetTransactionByIdRequest
             {
                 Id = id,
-                UserId = "teste@pedro"
+                UserId = user.Identity?.Name ?? string.Empty
             };
 
             var result = await handler.GetByIdAsync(request);
