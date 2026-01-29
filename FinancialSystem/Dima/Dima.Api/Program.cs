@@ -42,13 +42,15 @@ app.UseSwaggerUI();
 app.MapGet("/", () => new { message = "OK" });
 app.MapEndpoints();
 
-app.MapGroup("v1/identity").WithTags("Identity").MapGet("/roles", (ClaimsPrincipal user) => 
+app.MapGroup("v1/identity").WithTags("Identity").MapIdentityApi<User>();
+
+app.MapGroup("v1/identity").WithTags("Identity").MapGet("/roles", (ClaimsPrincipal user) =>
 {
     if (user.Identity is null || !user.Identity.IsAuthenticated)
         return Results.Unauthorized();
 
     var identity = (ClaimsIdentity)user.Identity;
-    var roles = identity.FindAll(identity.RoleClaimType).Select(c => new 
+    var roles = identity.FindAll(identity.RoleClaimType).Select(c => new
     {
         c.Issuer,
         c.OriginalIssuer,
@@ -58,6 +60,6 @@ app.MapGroup("v1/identity").WithTags("Identity").MapGet("/roles", (ClaimsPrincip
     });
 
     return TypedResults.Json(roles);
-}).RequireAuthorization();
+});
 
 app.Run();
