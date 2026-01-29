@@ -44,6 +44,12 @@ app.MapEndpoints();
 
 app.MapGroup("v1/identity").WithTags("Identity").MapIdentityApi<User>();
 
+app.MapGroup("v1/identity").WithTags("Identity").MapGet("/logout", async (SignInManager<User> signInManager) =>
+{
+    await signInManager.SignOutAsync();
+    return Results.Ok();
+}).RequireAuthorization();
+
 app.MapGroup("v1/identity").WithTags("Identity").MapGet("/roles", (ClaimsPrincipal user) =>
 {
     if (user.Identity is null || !user.Identity.IsAuthenticated)
