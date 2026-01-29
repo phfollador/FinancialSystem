@@ -1,4 +1,5 @@
 using Dima.Api.Data;
+using Dima.Api.Data.Common.Api;
 using Dima.Api.Endpoints;
 using Dima.Api.Handlers;
 using Dima.Api.Models;
@@ -9,6 +10,7 @@ using Microsoft.EntityFrameworkCore;
 using System.Security.Claims;
 
 var builder = WebApplication.CreateBuilder(args);
+builder.AddConfiguration();
 
 builder.Services.AddDbContext<AppDbContext>(x =>
 {
