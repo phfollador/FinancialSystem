@@ -5,5 +5,7 @@
         public const int DefaultPageSige = 25;
         public const int DefaultPageNumber = 1;
         public const int defaultStatusCode = 200;
+
+        public static string ConnectionString { get; set; } = string.Empty;
     }
 }
