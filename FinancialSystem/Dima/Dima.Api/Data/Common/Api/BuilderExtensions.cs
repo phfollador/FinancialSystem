@@ -14,5 +14,10 @@ namespace Dima.Api.Data.Common.Api
             webApplicationBuilder.Services.AddEndpointsApiExplorer();
             webApplicationBuilder.Services.AddSwaggerGen(x => x.CustomSchemaIds(n => n.FullName)); // gera o front para consultar a documentacao da api
         }
+
+        public static void AddSecurity(this WebApplicationBuilder webApplicationBuilder) 
+        {
+            
+        }
     }
 }
