@@ -1,7 +1,6 @@
 ﻿using Dima.Api.Data.Common.Api;
 using Dima.Api.Endpoints.Categories;
 using Dima.Api.Endpoints.Transactions;
-using Microsoft.AspNetCore.Cors.Infrastructure;
 
 namespace Dima.Api.Endpoints
 {
@@ -11,6 +10,8 @@ namespace Dima.Api.Endpoints
         public static void MapEndpoints(this WebApplication app)
         {
             var endpoints = app.MapGroup("");
+
+            endpoints.MapGroup("").WithTags("Health Ckeck").MapGet("/", () => new { message = "OK" });
 
             endpoints.MapGroup("v1/categories")
                 .WithTags("Categories")
