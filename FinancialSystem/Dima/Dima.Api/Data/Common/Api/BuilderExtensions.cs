@@ -41,5 +41,10 @@ namespace Dima.Api.Data.Common.Api
             webApplicationBuilder.Services.AddTransient<ICategoryHandler, CategoryHandler>();
             webApplicationBuilder.Services.AddTransient<ITransactionHandler, TransactionHandler>();
         }
+
+        public static void AddCrossOrigin(this WebApplicationBuilder webApplicationBuilder)
+        {
+
+        }
     }
 }
