@@ -7,5 +7,9 @@
         public const int defaultStatusCode = 200;
 
         public static string ConnectionString { get; set; } = string.Empty;
+
+        public static string BackendUrl { get; set; }
+
+        public static string FrontendUrl { get; set; }
     }
 }

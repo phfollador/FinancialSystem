@@ -12,6 +12,8 @@ namespace Dima.Api.Data.Common.Api
         public static void AddConfiguration(this WebApplicationBuilder webApplicationBuilder)
         {
             Configuration.ConnectionString = webApplicationBuilder.Configuration.GetConnectionString("DefaultConnection") ?? string.Empty;
+            Configuration.BackendUrl = webApplicationBuilder.Configuration.GetValue<string>("BackendUrl") ?? string.Empty;
+            Configuration.FrontendUrl = webApplicationBuilder.Configuration.GetValue<string>("FrontendUrl") ?? string.Empty;
         }
 
         public static void AddDocumentation(this WebApplicationBuilder webApplicationBuilder)
@@ -44,7 +46,16 @@ namespace Dima.Api.Data.Common.Api
 
         public static void AddCrossOrigin(this WebApplicationBuilder webApplicationBuilder)
         {
-
+            webApplicationBuilder.Services.AddCors(options => options.AddPolicy(
+                ApiConfiguration.CorsPolicyName, policy => policy
+                .WithOrigins([
+                    Configuration.BackendUrl,
+                    Configuration.FrontendUrl
+                ])
+                .AllowAnyMethod()
+                .AllowAnyHeader()
+                .AllowCredentials()
+                ));
         }
     }
 }
