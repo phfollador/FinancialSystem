@@ -12,12 +12,7 @@ using System.Security.Claims;
 var builder = WebApplication.CreateBuilder(args);
 builder.AddConfiguration();
 
-builder.Services.AddDbContext<AppDbContext>(x =>
-{
-    x.UseSqlServer(Configuration.ConnectionString);
-});
 
-builder.Services.AddIdentityCore<User>().AddRoles<IdentityRole<long>>().AddEntityFrameworkStores<AppDbContext>().AddApiEndpoints();
 builder.Services.AddTransient<ICategoryHandler, CategoryHandler>();
 builder.Services.AddTransient<ITransactionHandler, TransactionHandler>();
 
