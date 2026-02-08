@@ -1,6 +1,6 @@
 ﻿@inherits LayoutComponentBase
 
-<MudThemeProvider IsDarkMode="isDarkMode" Theme="Configuration.Theme" />
+<MudThemeProvider @ref="mudThemeProvider" IsDarkMode="isDarkMode" Theme="Configuration.Theme"/>
 <MudSnackbarProvider />
 
 <MudLayout>
@@ -18,4 +18,21 @@
 
 @code{
     private bool isDarkMode = true;
+    private MudThemeProvider mudThemeProvider = null!;
+
+    protected override async Task OnAfterRenderAsync(bool firstRender)
+    {
+        if (firstRender)
+        {
+            isDarkMode = await mudThemeProvider.GetSystemDarkModeAsync();
+            await mudThemeProvider.WatchSystemDarkModeAsync(OnSystemPreferenceChanged); //ja passa como delegate para o metodo OnSystemPreferenceChanged
+        }
+    }
+
+    private Task OnSystemPreferenceChanged(bool newValue)
+    {
+        isDarkMode = newValue;
+        StateHasChanged();
+        return Task.CompletedTask;
+    }
 }
