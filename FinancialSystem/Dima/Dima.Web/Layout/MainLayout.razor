@@ -26,6 +26,7 @@
         {
             isDarkMode = await mudThemeProvider.GetSystemDarkModeAsync();
             await mudThemeProvider.WatchSystemDarkModeAsync(OnSystemPreferenceChanged); //ja passa como delegate para o metodo OnSystemPreferenceChanged
+            StateHasChanged();
         }
     }
 
