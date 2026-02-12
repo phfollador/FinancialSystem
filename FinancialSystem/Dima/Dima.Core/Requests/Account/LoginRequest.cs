@@ -1,12 +1,14 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.ComponentModel.DataAnnotations;
 
 namespace Dima.Core.Requests.Account
 {
-    internal class LoginRequest
+    public class LoginRequest : Request
     {
+        [Required(ErrorMessage = "E-mail")]
+        [EmailAddress(ErrorMessage = "E-mail invalido")]
+        public string Email { get; set; } = string.Empty;
+
+        [Required(ErrorMessage = "Senha invalida")]
+        public string Password { get; set; } = string.Empty;
     }
 }
