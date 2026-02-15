@@ -46,6 +46,25 @@ namespace Dima.Web.Security
                     new Claim(ClaimTypes.Email, user.Email)
                 };
 
+            claims.AddRange(user.Claims.Where(x => x.Key != ClaimTypes.Name && x.Key != ClaimTypes.Email).Select(x => new Claim(x.Key, x.Value)));
+
+            RoleClaim[]? roles;
+
+            try
+            {
+                roles = await client.GetFromJsonAsync<RoleClaim[]>("v1/identity/roles");
+            }
+            catch
+            {
+                return claims;
+            }
+
+            foreach(var role in roles ?? [])
+            {
+                if(!string.IsNullOrEmpty(role.Type) && !string.IsNullOrEmpty(role.Value))
+                    claims.Add(new Claim(role.Type, role.Value, role.ValueType, role.Issuer, role.OriginalIssuer));
+            }
+
             return claims;
         }
     }
