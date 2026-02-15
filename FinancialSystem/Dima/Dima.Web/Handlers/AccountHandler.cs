@@ -22,9 +22,12 @@ namespace Dima.Web.Handlers
             throw new NotImplementedException();
         }
 
-        public Task<Response<string>> RegisterAsync(RegisterRequest loginRequest)
+        public async Task<Response<string>> RegisterAsync(RegisterRequest loginRequest)
         {
-            throw new NotImplementedException();
+            var result = await client.PostAsJsonAsync("v1/identity/register", loginRequest);
+            return result.IsSuccessStatusCode
+                ? new Response<string>("Cadastro realizado com sucesso", 201, "Cadastro realizado com sucesso")
+                : new Response<string>(null, 400, "Não foi possível realizar o cadastro");
         }
     }
 }
