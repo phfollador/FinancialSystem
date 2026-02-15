@@ -1,7 +1,19 @@
-﻿namespace Dima.Web.Security
+﻿using Microsoft.AspNetCore.Components.Authorization;
+
+namespace Dima.Web.Security
 {
     public interface ICookieAuthenticationStateProvider
     {
+        Task<bool> CheckAuthenticationAsync();
+        Task<AuthenticationState> GetAuthenticationStateAsync();
+        void NotifyAuthenticationStateChanged();
+    }
 
+    public class CookieAuthenticationStateProvider : AuthenticationStateProvider
+    {
+        public override Task<AuthenticationState> GetAuthenticationStateAsync()
+        {
+            throw new NotImplementedException();
+        }
     }
 }
