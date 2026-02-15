@@ -9,7 +9,7 @@ namespace Dima.Web.Security
         void NotifyAuthenticationStateChanged();
     }
 
-    public class CookieAuthenticationStateProvider : AuthenticationStateProvider
+    public class CookieAuthStateProvider : AuthenticationStateProvider
     {
         public override Task<AuthenticationState> GetAuthenticationStateAsync()
         {
