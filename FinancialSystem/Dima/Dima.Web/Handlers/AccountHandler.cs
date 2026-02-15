@@ -11,7 +11,10 @@ namespace Dima.Web.Handlers
 
         public async Task<Response<string>> LoginAsync(LoginRequest loginRequest)
         {
-            await client.PostAsJsonAsync("v1/identity/login", loginRequest);
+            var result = await client.PostAsJsonAsync("v1/identity/login?useCookies=true", loginRequest);
+            return result.IsSuccessStatusCode 
+                ? new Response<string>("Login realizado com sucesso", 200, "Login realizado com sucesso") 
+                : new Response<string>(null, 400, "Não foi possível realizar o login");
         }
 
         public Task LogoutAsync()
