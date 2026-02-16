@@ -16,9 +16,22 @@ namespace Dima.Web.Security
             return isAuthenticated;
         }
 
-        public override Task<AuthenticationState> GetAuthenticationStateAsync()
+        public override async Task<AuthenticationState> GetAuthenticationStateAsync()
         {
-            throw new NotImplementedException();
+            isAuthenticated = false;
+            var user = new ClaimsPrincipal(new ClaimsIdentity());
+            var userInfo = await GetUser();
+
+            if (userInfo == null)
+                return new AuthenticationState(user);
+
+            var claims = await GetClaims(userInfo);
+            var id = new ClaimsIdentity(claims, nameof(CookieAuthenticationStateProvider));
+            
+            user = new ClaimsPrincipal(id);
+
+            isAuthenticated = true;
+            return new AuthenticationState(user);
         }
 
         public void NotifyAuthenticationStateChanged()
