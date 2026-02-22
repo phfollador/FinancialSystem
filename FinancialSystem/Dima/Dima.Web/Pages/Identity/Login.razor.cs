@@ -48,12 +48,18 @@ namespace Dima.Web.Pages.Identity
 
         public async Task OnValidSubmitAsync()
         {
+            IsBusy = true;
+
             try
             {
                 var result = await Handler.LoginAsync(InputModel);
 
                 if (result.IsSuccess)
-                    NavigationManager.NavigateTo("/home");
+                {
+                    await AuthenticationStateProvider.GetAuthenticationStateAsync();
+                    AuthenticationStateProvider.NotifyAuthenticationStateChanged();
+                    NavigationManager.NavigateTo("/");
+                }
                 else
                     Snackbar.Add(result.Message, Severity.Error);
             }
