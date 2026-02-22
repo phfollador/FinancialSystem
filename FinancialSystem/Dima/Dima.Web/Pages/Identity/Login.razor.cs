@@ -2,13 +2,11 @@
 using Dima.Core.Requests.Account;
 using Dima.Web.Security;
 using Microsoft.AspNetCore.Components;
-using Microsoft.AspNetCore.Components.Authorization;
 using MudBlazor;
-using System.ComponentModel;
 
 namespace Dima.Web.Pages.Identity
 {
-    public partial class RegisterPage : ComponentBase
+    public partial class LoginPage : ComponentBase
     {
         #region Dependencies
 
@@ -22,14 +20,14 @@ namespace Dima.Web.Pages.Identity
         public NavigationManager NavigationManager { get; set; } = null!;
 
         [Inject]
-        public AuthenticationStateProvider AuthenticationStateProvider { get; set; } = null!;
+        public ICookieAuthenticationStateProvider AuthenticationStateProvider { get; set; } = null!;
 
         #endregion
 
         #region Properties
 
         public bool IsBusy { get; set; } = false;
-        public RegisterRequest InputModel { get; set; } = new();
+        public LoginRequest InputModel { get; set; } = new();
 
         #endregion
 
@@ -40,7 +38,7 @@ namespace Dima.Web.Pages.Identity
             var authState = await AuthenticationStateProvider.GetAuthenticationStateAsync();
             var user = authState.User;
 
-            if (user.Identity is { IsAuthenticated: true}) // se o usuario e diferente de null e esta autenticado (forma diferente e elegante)
+            if (user.Identity is { IsAuthenticated: true }) // se o usuario e diferente de null e esta autenticado (forma diferente e elegante)
                 NavigationManager.NavigateTo("/");
         }
 
@@ -52,13 +50,10 @@ namespace Dima.Web.Pages.Identity
         {
             try
             {
-                var result = await Handler.RegisterAsync(InputModel);
+                var result = await Handler.LoginAsync(InputModel);
 
                 if (result.IsSuccess)
-                {
-                    NavigationManager.NavigateTo("/login");
-                    Snackbar.Add(result.Message, Severity.Success);
-                }
+                    NavigationManager.NavigateTo("/home");
                 else
                     Snackbar.Add(result.Message, Severity.Error);
             }
