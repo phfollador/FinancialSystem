@@ -13,7 +13,7 @@
                 <MudText Typo="Typo.caption">
                     @context.User.Identity?.Name
                 </MudText>
-                <MudSwitch @bind-Value="@isDarkMode" />
+                <MudSwitch Color="Color.Inherit" @bind-Value="@isDarkMode" T="bool" Class="ma-4" ThumbIcon="@Icons.Material.TwoTone.Lightbulb"/>
             </MudAppBar>
             <MudDrawer @bind-Open="@isDrawerOpen">
                 <h3>Nav Menu</h3>
