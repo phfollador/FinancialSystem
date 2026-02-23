@@ -14,6 +14,9 @@
                 </MudText>
                 <MudSwitch @bind-Value="@isDarkMode" />
             </MudAppBar>
+            <MudDrawer @bind-Open="@isDrawerOpen">
+                <h3>Nav Menu</h3>
+            </MudDrawer>
             <MudMainContent>
                 <MudContainer>
                     @Body
@@ -27,6 +30,7 @@
 </AuthorizeView>
 
 @code{
+    private bool isDrawerOpen = true;
     private bool isDarkMode = true;
     private MudThemeProvider mudThemeProvider = null!;
 
@@ -45,5 +49,10 @@
         isDarkMode = newValue;
         StateHasChanged();
         return Task.CompletedTask;
+    }
+
+    private void ToggleDrawer()
+    {
+        isDrawerOpen = !isDrawerOpen;
     }
 }
