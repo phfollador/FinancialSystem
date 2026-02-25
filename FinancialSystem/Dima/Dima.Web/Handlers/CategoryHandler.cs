@@ -29,7 +29,8 @@ namespace Dima.Web.Handlers
 
         public async Task<Response<Category?>> GetByIdAsync(GetCategoryByIdRequest request)
         {
-            throw new NotImplementedException();
+            var result = await client.GetFromJsonAsync<Response<Category?>>($"v1/categories/{request.Id}");
+            return result ?? new Response<Category?>(null, 400, "Não foi possível obter a categoria");
         }
 
         public async Task<Response<Category?>> UpdateAsync(UpdateCategoryRequest request)
