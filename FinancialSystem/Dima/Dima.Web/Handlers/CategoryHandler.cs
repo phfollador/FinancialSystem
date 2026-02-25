@@ -22,10 +22,11 @@ namespace Dima.Web.Handlers
             return await result.Content.ReadFromJsonAsync<Response<Category?>>() ?? new Response<Category?>(null, 400, "Falha ao excluir categoria");
         }
 
-        public async Task<PagedResponse<List<Category>?>> GetAllAsync(GetAllCategoriesRequest request)
-        {
-            throw new NotImplementedException();
-        }
+        public async Task<PagedResponse<List<Category>?>> GetAllAsync(GetAllCategoriesRequest request) 
+            =>
+            await client.GetFromJsonAsync<PagedResponse<List<Category>?>>("v1/categories")
+                ?? new PagedResponse<List<Category>?>(null, 400, "Não foi possível obter as categorias");
+        
 
         public async Task<Response<Category?>> GetByIdAsync(GetCategoryByIdRequest request)
         {
