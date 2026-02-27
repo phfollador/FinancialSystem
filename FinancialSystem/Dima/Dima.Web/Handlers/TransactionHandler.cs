@@ -11,9 +11,11 @@ namespace Dima.Web.Handlers
     {
         private readonly HttpClient client = httpClientFactory.CreateClient(Configuration.HttpClientName);
 
-        public Task<Response<Transaction?>> CreateAsync(CreateTransactionRequest request)
+        public async Task<Response<Transaction?>> CreateAsync(CreateTransactionRequest request)
         {
-            throw new NotImplementedException();
+            var result = await client.PostAsJsonAsync("v1/transactions", request);
+            return await result.Content.ReadFromJsonAsync<Response<Transaction?>>() 
+                ?? new Response<Transaction?>(null, 400, "Nao foi possivel criar a transacao");
         }
 
         public Task<Response<Transaction?>> DeleteAsync(DeleteTransactionRequest request)
