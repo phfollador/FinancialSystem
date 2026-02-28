@@ -46,9 +46,11 @@ namespace Dima.Web.Handlers
                 ?? new PagedResponse<List<Transaction>?>(null, 400, "Nao foi possivel obter as transacoes");
         }
 
-        public Task<Response<Transaction?>> UpdateAsync(UpdateTransactionRequest request)
+        public async Task<Response<Transaction?>> UpdateAsync(UpdateTransactionRequest request)
         {
-            throw new NotImplementedException();
+            var result = await client.PutAsJsonAsync($"v1/transactions/{request.Id}", request);
+            return await result.Content.ReadFromJsonAsync<Response<Transaction?>>()
+                ?? new Response<Transaction?>(null, 400, "Nao foi possivel atualizar a transacao");
         }
     }
 }
