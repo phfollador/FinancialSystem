@@ -25,9 +25,10 @@ namespace Dima.Web.Handlers
                 ?? new Response<Transaction?>(null, 400, "Nao foi possivel remover a transacao");
         }
 
-        public Task<Response<Transaction?>> GetByIdAsync(GetTransactionByIdRequest request)
+        public async Task<Response<Transaction?>> GetByIdAsync(GetTransactionByIdRequest request)
         {
-            throw new NotImplementedException();
+            var result = await client.GetFromJsonAsync<Response<Transaction?>>($"v1/transactions/{request.Id}");
+            return result ?? new Response<Transaction?>(null, 400, "Nao foi possivel obter uma transacao");
         }
 
         public async Task<PagedResponse<List<Transaction>?>> GetByPeriodAsync(GetTransactionsByPeriodRequest request)
