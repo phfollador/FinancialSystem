@@ -18,9 +18,11 @@ namespace Dima.Web.Handlers
                 ?? new Response<Transaction?>(null, 400, "Nao foi possivel criar a transacao");
         }
 
-        public Task<Response<Transaction?>> DeleteAsync(DeleteTransactionRequest request)
+        public async Task<Response<Transaction?>> DeleteAsync(DeleteTransactionRequest request)
         {
-            throw new NotImplementedException();
+            var result = await client.DeleteAsync($"v1/transactions/{request.Id}");
+            return await result.Content.ReadFromJsonAsync<Response<Transaction?>>()
+                ?? new Response<Transaction?>(null, 400, "Nao foi possivel remover a transacao");
         }
 
         public Task<Response<Transaction?>> GetByIdAsync(GetTransactionByIdRequest request)
