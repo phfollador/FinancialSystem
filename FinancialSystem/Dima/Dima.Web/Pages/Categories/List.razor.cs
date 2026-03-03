@@ -1,47 +1,42 @@
 ﻿using Dima.Core.Handlers;
+using Dima.Core.Models;
 using Dima.Core.Requests.Categories;
 using Microsoft.AspNetCore.Components;
 using MudBlazor;
 
 namespace Dima.Web.Pages.Categories
 {
-    public partial class CreateCategoryPage : ComponentBase
+    public partial class ListCategoriesPage : ComponentBase
     {
         #region Properties
 
         public bool IsBusy { get; set; } = false;
-        public CreateCategoryRequest InputModel { get; set; } = new();
+        public List<Category> Categories { get; set; } = [];
 
         #endregion
 
         #region Services
 
-        [Inject]
-        public ICategoryHandler Handler { get; set; } = null!;
-
-        [Inject]
-        public NavigationManager NavigationManager { get; set; } = null!;
-
-        [Inject]
         public ISnackbar Snackbar { get; set; } = null!;
+        public ICategoryHandler Handler { get; set; } = null!;
 
         #endregion
 
         #region Methods
 
-        public async Task OnValidSubmitAsync()
+        protected override async Task OnInitializedAsync()
         {
             IsBusy = true;
 
             try
             {
-                var result = await Handler.CreateAsync(InputModel);
+                var request = new GetAllCategoriesRequest();
+                var result = await Handler.GetAllAsync(request);
+
                 if (result.IsSuccess)
-                    NavigationManager.NavigateTo("/categorias");
-                else
-                    Snackbar.Add(result.Message, Severity.Error);
+                    Categories = result.Data ?? [];
             }
-            catch (Exception ex)
+            catch(Exception ex)
             {
                 Snackbar.Add(ex.Message, Severity.Error);
             }
