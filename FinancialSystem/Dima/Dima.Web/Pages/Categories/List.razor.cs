@@ -17,7 +17,10 @@ namespace Dima.Web.Pages.Categories
 
         #region Services
 
+        [Inject]
         public ISnackbar Snackbar { get; set; } = null!;
+
+        [Inject]
         public ICategoryHandler Handler { get; set; } = null!;
 
         #endregion
