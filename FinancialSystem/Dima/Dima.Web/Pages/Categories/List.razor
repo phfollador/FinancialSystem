@@ -2,6 +2,11 @@
 @inherits ListCategoriesPage
 
 <MudText Typo="Typo.h3">Categorias</MudText>
+<div class="d-flex justify-content-end">
+    <MudButton Variant="Variant.Filled" Color="Color.Primary" StartIcon="@Icons.Material.TwoTone.Add" Href="/categorias/adicionar">
+        NOVA CATEGORIA
+    </MudButton>
+</div>
 
 <ul>
     @foreach (var cat in Categories)
