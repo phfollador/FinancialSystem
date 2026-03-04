@@ -8,9 +8,9 @@
     </MudButton>
 </div>
 
-<ul>
-    @foreach (var cat in Categories)
-    {
-        <li>@cat.Title</li>
-    }
-</ul>
+<MudDataGrid Items="@Categories">
+    <Columns>
+        <PropertyColumn Property="x => x.Id" Title="#"/>
+        <PropertyColumn Property="x => x.Title" Title="Categoria"/>
+    </Columns>
+</MudDataGrid>
