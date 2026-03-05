@@ -8,7 +8,7 @@
     </MudButton>
 </div>
 
-<MudDataGrid Class="pt-4" Items="@Categories">
+<MudDataGrid Class="pt-4" Items="@Categories" Filterable="true" QuickFilter="Filter" Hideable="true">
     <Columns>
         <PropertyColumn Property="x => x.Id" Title="#"/>
         <PropertyColumn Property="x => x.Title" Title="Categoria"/>
