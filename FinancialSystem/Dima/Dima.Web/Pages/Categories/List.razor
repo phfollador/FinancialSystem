@@ -26,7 +26,7 @@
         <TemplateColumn Class="d-flex justify-content-end">
             <CellTemplate>
                 <MudStack Row>
-                    <MudIconButton Icon="@Icons.Material.Filled.Edit" Href="" Color="Color.Primary"/>
+                    <MudIconButton Icon="@Icons.Material.Filled.Edit" Href="@($"/categorias/editar/{context.Item.Id}")" Color="Color.Primary"/>
                     <MudIconButton Icon="@Icons.Material.Filled.Delete" Href="" Color="Color.Primary"/>
                 </MudStack>
             </CellTemplate>
