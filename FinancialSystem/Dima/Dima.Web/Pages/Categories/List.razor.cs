@@ -74,6 +74,23 @@ namespace Dima.Web.Pages.Categories
             return false;
         };
 
+        public async void OnDeleteButtonClickedAsync(long id, string title)
+        {
+            var result = await DialogService.ShowMessageBox(
+                "ATENÇÃO", 
+                $"Ao prosseguir, a categoria {title} será excluida. Esta é uma ação irreversível, deseja prosseguir?", 
+                yesText: "EXCLUIR", 
+                cancelText: "CANCELAR");
+
+            if (result is true)
+                await OnDeleteAsync();
+        }
+
+        private async Task OnDeleteAsync()
+        {
+            throw new NotImplementedException();
+        }
+
         #endregion
     }
 }
