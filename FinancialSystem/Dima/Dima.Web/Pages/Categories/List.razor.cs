@@ -83,10 +83,12 @@ namespace Dima.Web.Pages.Categories
                 cancelText: "CANCELAR");
 
             if (result is true)
-                await OnDeleteAsync();
+                await OnDeleteAsync(id);
+
+            StateHasChanged();
         }
 
-        private async Task OnDeleteAsync()
+        private async Task OnDeleteAsync(long id)
         {
             throw new NotImplementedException();
         }
