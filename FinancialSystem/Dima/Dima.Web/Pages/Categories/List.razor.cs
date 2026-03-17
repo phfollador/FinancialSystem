@@ -83,14 +83,23 @@ namespace Dima.Web.Pages.Categories
                 cancelText: "CANCELAR");
 
             if (result is true)
-                await OnDeleteAsync(id);
+                await OnDeleteAsync(id, title);
 
             StateHasChanged();
         }
 
-        private async Task OnDeleteAsync(long id)
+        private async Task OnDeleteAsync(long id, string title)
         {
-            throw new NotImplementedException();
+            try
+            {
+                await Handler.DeleteAsync(new DeleteCategoryRequest { Id = id });
+                Categories.RemoveAll(x => x.Id == id);
+                Snackbar.Add($"Categoria {title} excluida com sucesso.", Severity.Success);
+            }
+            catch(Exception ex) 
+            {
+                Snackbar.Add($"Algo deu errado, {ex.Message}", Severity.Error);
+            }
         }
 
         #endregion
