@@ -1,5 +1,7 @@
 ﻿using Dima.Core.Handlers;
+using Dima.Core.Requests.Categories;
 using Microsoft.AspNetCore.Components;
+using System.Reflection.Metadata;
 
 namespace Dima.Web.Pages.Categories
 {
@@ -8,6 +10,8 @@ namespace Dima.Web.Pages.Categories
         #region Properties
 
         public bool IsBusy { get; set; } = false;
+
+        public UpdateCategoryRequest InputModel { get; set; } = new();
 
         #endregion
 
@@ -25,6 +29,24 @@ namespace Dima.Web.Pages.Categories
 
         [Inject]
         public ICategoryHandler Handler { get; set; } = null!;
+
+        #endregion
+
+        #region Overrides
+
+        protected override async Task OnInitializedAsync()
+        {
+            var request = new GetCategoryByIdRequest { Id = long.Parse(Id) };
+            var response = await Handler.GetByIdAsync(request);
+
+            if (response.Data != null && response.IsSuccess)
+                InputModel = new UpdateCategoryRequest 
+                {
+                    Id = response.Data.Id,
+                    Title = response.Data.Title,
+                    Description = response.Data.Description
+                };
+        }
 
         #endregion
     }
