@@ -1,6 +1,7 @@
 ﻿using Dima.Core.Handlers;
 using Dima.Core.Requests.Categories;
 using Microsoft.AspNetCore.Components;
+using MudBlazor;
 using System.Reflection.Metadata;
 
 namespace Dima.Web.Pages.Categories
@@ -30,22 +31,51 @@ namespace Dima.Web.Pages.Categories
         [Inject]
         public ICategoryHandler Handler { get; set; } = null!;
 
+        [Inject]
+        public ISnackbar Snackbar { get; set; } = null!;
+
         #endregion
 
         #region Overrides
 
         protected override async Task OnInitializedAsync()
         {
-            var request = new GetCategoryByIdRequest { Id = long.Parse(Id) };
-            var response = await Handler.GetByIdAsync(request);
+            GetCategoryByIdRequest request = null;
 
-            if (response.Data != null && response.IsSuccess)
-                InputModel = new UpdateCategoryRequest 
-                {
-                    Id = response.Data.Id,
-                    Title = response.Data.Title,
-                    Description = response.Data.Description
-                };
+            try
+            {
+                request = new GetCategoryByIdRequest { Id = long.Parse(Id) };
+            }
+            catch (Exception ex)
+            {
+                Snackbar.Add("Parametro invalido", Severity.Error);
+            }
+
+            if (request is null)
+                return;
+
+            IsBusy = true;
+
+            try
+            {
+                var response = await Handler.GetByIdAsync(request);
+
+                if (response.Data != null && response.IsSuccess)
+                    InputModel = new UpdateCategoryRequest
+                    {
+                        Id = response.Data.Id,
+                        Title = response.Data.Title,
+                        Description = response.Data.Description
+                    };
+            }
+            catch (Exception ex)
+            {
+                Snackbar.Add(ex.Message, Severity.Error);
+            }
+            finally
+            {
+                IsBusy = false;
+            }
         }
 
         #endregion
