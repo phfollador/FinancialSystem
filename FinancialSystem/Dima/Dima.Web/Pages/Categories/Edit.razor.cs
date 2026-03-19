@@ -79,5 +79,33 @@ namespace Dima.Web.Pages.Categories
         }
 
         #endregion
+
+        #region Methods
+
+        public async Task OnValidSubmitAsync()
+        {
+            IsBusy = true;
+
+            try
+            {
+                var result = await Handler.UpdateAsync(InputModel);
+
+                if (result.IsSuccess)
+                {
+                    Snackbar.Add("Categoria Atualizada.", Severity.Success);
+                    NavigationManager.NavigateTo("/categorias");
+                }
+            }
+            catch(Exception ex)
+            {
+                Snackbar.Add(ex.Message, Severity.Error);
+            }
+            finally 
+            { 
+                IsBusy = false; 
+            }
+        }
+
+        #endregion
     }
 }
