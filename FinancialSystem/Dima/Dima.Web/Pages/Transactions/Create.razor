@@ -8,5 +8,10 @@
         <DataAnnotationsValidator/>
         <MudTextField Label="Titulo" HelperText="Campo obrigatorio" @bind-Value="InputModel.Title" For="@(() => InputModel.Title)"/>
         <MudTextField Label="Valor" T="decimal" Format="C" Variant="Variant.Text" HelperText="Informe o valor que sera pago ou recebido" @bind-Value="InputModel.Amount" For="@(() => InputModel.Amount)"/>
+        <MudDatePicker Label="Quando?" @bind-Date="@InputModel.PaidOrReceivedAt" HelperText="Selecione a data..."/>
+        <MudSelect T="ETransactionType" Label="Tipo de movimentacao" AnchorOrigin="Origin.BottomCenter" @bind-Value="@InputModel.Type">
+            <MudSelectItem T="ETransactionType" Value="ETransactionType.Deposit">Entrada</MudSelectItem>
+            <MudSelectItem T="ETransactionType" Value="ETransactionType.Whitdraw">Saida</MudSelectItem>
+        </MudSelect>
     </EditForm>
 </MudPaper>
