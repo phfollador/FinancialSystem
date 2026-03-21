@@ -1,4 +1,6 @@
 ﻿using Dima.Core.Handlers;
+using Dima.Core.Models;
+using Dima.Core.Requests.Categories;
 using Dima.Core.Requests.Transactions;
 using Microsoft.AspNetCore.Components;
 using MudBlazor;
@@ -11,19 +13,49 @@ namespace Dima.Web.Pages.Transactions
 
         public bool IsBusy { get; set; } = false;
         public CreateTransactionRequest InputModel { get; set; } = new();
+        public List<Category> Categories { get; set; } = new();
 
         #endregion
 
         #region Services
 
         [Inject]
-        public ITransactionHandler Handler { get; set; } = null!;
+        public ICategoryHandler CategoryHandler { get; set; } = null!;
+
+        [Inject]
+        public ITransactionHandler TransactionHandler { get; set; } = null!;
 
         [Inject]
         public NavigationManager NavigationManager { get; set; } = null!;
 
         [Inject]
         public ISnackbar Snackbar { get; set; } = null!;
+
+        #endregion
+
+        #region Overrides
+
+        protected override async Task OnInitializedAsync()
+        {
+            IsBusy = true;
+
+            try
+            {
+                var request = new GetAllCategoriesRequest();
+                var result = await CategoryHandler.GetAllAsync(request);
+                
+                if (result.IsSuccess)
+                    Categories = result.Data ?? [];
+            }
+            catch (Exception ex)
+            {
+                Snackbar.Add(ex.Message, Severity.Error);
+            }
+            finally
+            {
+                IsBusy = false;
+            }
+        }
 
         #endregion
 
@@ -35,7 +67,7 @@ namespace Dima.Web.Pages.Transactions
 
             try
             {
-                var result = await Handler.CreateAsync(InputModel);
+                var result = await TransactionHandler.CreateAsync(InputModel);
                 if (result.IsSuccess)
                     NavigationManager.NavigateTo("/transactions");
                 else

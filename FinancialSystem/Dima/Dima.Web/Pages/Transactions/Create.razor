@@ -13,5 +13,12 @@
             <MudSelectItem T="ETransactionType" Value="ETransactionType.Deposit">Entrada</MudSelectItem>
             <MudSelectItem T="ETransactionType" Value="ETransactionType.Whitdraw">Saida</MudSelectItem>
         </MudSelect>
+
+        <MudSelect T="long" Label="Categoria" AnchorOrigin="Origin.BottomCenter" @bind-Value="@InputModel.CategoryId">
+            @foreach(var categorie in Categories)
+            {
+                <MudSelectItem T="long" Value="@categorie.Id">@categorie.Title</MudSelectItem>
+            }
+        </MudSelect>
     </EditForm>
 </MudPaper>
