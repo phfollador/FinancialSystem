@@ -19,7 +19,7 @@ namespace Dima.Api.Handlers
                     UserId = request.UserId,
                     CategoryId = request.CategoryId,
                     CreateAt = DateTime.UtcNow,
-                    Amount = request.Amount,
+                    Amount = request.Amount > 0 && request.Type == Core.Enums.ETransactionType.Whitdraw ? request.Amount *= -1 : request.Amount,
                     PaidOrReceivedAt = request.PaidOrReceivedAt,
                     Title = request.Title,
                     Type = request.Type
@@ -121,7 +121,7 @@ namespace Dima.Api.Handlers
                     return new Response<Transaction?>(null, 404, "Nao foi possivel recuperar uma transacao");
 
                 transaction.CategoryId = request.CategoryId;
-                transaction.Amount = request.Amount;
+                transaction.Amount = request.Amount > 0 && request.Type == Core.Enums.ETransactionType.Whitdraw ? request.Amount *= -1 : request.Amount,
                 transaction.PaidOrReceivedAt = request.PaidOrReceivedAt;
                 transaction.Title = request.Title;
                 transaction.Type = request.Type;
