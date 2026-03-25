@@ -41,6 +41,8 @@ namespace Dima.Web.Pages.Transactions
 
         #region Methods
 
+        protected override Task OnInitializedAsync() => GetTransactions();
+
         private async Task GetTransactions()
         {
             IsBusy = true;
