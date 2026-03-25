@@ -71,5 +71,17 @@ namespace Dima.Web.Pages.Transactions
         }
 
         #endregion
+
+        #region Public Methods
+
+        public Func<Transaction, bool> Filter => transaction =>
+        {
+            if (string.IsNullOrEmpty(SearchTerm))
+                return true;
+
+            return transaction.Id.ToString().Contains(SearchTerm, StringComparison.OrdinalIgnoreCase) || transaction.Title.Contains(SearchTerm, StringComparison.OrdinalIgnoreCase);
+        };
+
+        #endregion
     }
 }
