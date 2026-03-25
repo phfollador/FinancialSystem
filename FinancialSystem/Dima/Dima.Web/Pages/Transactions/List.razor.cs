@@ -1,5 +1,7 @@
-﻿using Dima.Core.Handlers;
+﻿using Dima.Core.Common.Extensions;
+using Dima.Core.Handlers;
 using Dima.Core.Models;
+using Dima.Core.Requests.Transactions;
 using Microsoft.AspNetCore.Components;
 using MudBlazor;
 
@@ -38,6 +40,34 @@ namespace Dima.Web.Pages.Transactions
         #endregion
 
         #region Methods
+
+        private async Task GetTransactions()
+        {
+            IsBusy = true;
+
+            try
+            {
+                var request = new GetTransactionsByPeriodRequest
+                {
+                    StartDate = DateTime.Now.GetFirstDate(CurrentYear, CurrentMonth),
+                    EndDate = DateTime.Now.GetLastDate(CurrentYear, CurrentMonth),
+                    PageNumber = 1,
+                    PageSize = 1000
+                };
+                var result = await Handler.GetByPeriodAsync(request);
+
+                if (result.IsSuccess)
+                {
+                    Transactions = result.Data ?? [];
+                }
+            }
+            catch (Exception ex)
+            {
+                Snackbar.Add(ex.Message, Severity.Error);
+            }
+            finally { IsBusy = false; }
+        }
+
         #endregion
     }
 }
