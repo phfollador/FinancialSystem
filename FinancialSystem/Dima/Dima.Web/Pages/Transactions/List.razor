@@ -3,7 +3,7 @@
 
 <MudText Typo="Typo.h3">Lancamentos</MudText>
 
-<MudDataGrid Items="@Transactions" Filterable="true" QuickFilter="Filter" Hideable="true" ColumnResizeMode="ResizeMode.Column">
+<MudDataGrid Items="@Transactions" Filterable="false" QuickFilter="Filter" Hideable="true" ColumnResizeMode="ResizeMode.Column">
     <ToolBarContent>
         <MudText Typo="Typo.h6">
             Lancamentos
@@ -11,4 +11,28 @@
         <MudSpacer/>
         <MudTextField @bind-Value="SearchTerm" Placeholder="Filtrar..." Adornment="Adornment.Start" AdornmentIcon="@Icons.Material.Filled.Search" Immediate="true" IconSize="Size.Medium" Class="mt-0"/>
     </ToolBarContent>
+    <Columns>
+        <PropertyColumn Property="x => x.Title" Title="Lancamento"/>
+        <TemplateColumn Title="Tipo" Filterable="true">
+            <CellTemplate>
+                @if(context.Item.Type == ETransactionType.Deposit)
+                {
+                    <MudChip Color="Color.Success" Size="Size.Small" Variant="Variant.Filled">
+                        Entrada
+                    </MudChip>
+                }
+                else
+                {
+                    <MudChip Color="Color.Error" Size="Size.Small" Variant="Variant.Filled">
+                        Saida
+                    </MudChip>
+                }
+            </CellTemplate>
+        </TemplateColumn>
+        <PropertyColumn Property="x => x.Amount" Format="C" Title="Valor" Sortable="true">
+            <FooterTemplate>
+                @context.Items.Sum(x => x.Amount).ToString("C");
+            </FooterTemplate>
+        </PropertyColumn>
+    </Columns>
 </MudDataGrid>
