@@ -4,5 +4,11 @@
 <MudText Typo="Typo.h3">Lancamentos</MudText>
 
 <MudDataGrid Items="@Transactions" Filterable="true" QuickFilter="Filter" Hideable="true" ColumnResizeMode="ResizeMode.Column">
-
+    <ToolBarContent>
+        <MudText Typo="Typo.h6">
+            Lancamentos
+        </MudText>
+        <MudSpacer/>
+        <MudTextField @bind-Value="SearchTerm" Placeholder="Filtrar..." Adornment="Adornment.Start" AdornmentIcon="@Icons.Material.Filled.Search" Immediate="true" IconSize="Size.Medium" Class="mt-0"/>
+    </ToolBarContent>
 </MudDataGrid>
