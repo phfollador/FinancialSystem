@@ -70,6 +70,31 @@ namespace Dima.Web.Pages.Transactions
             finally { IsBusy = false; }
         }
 
+        private async Task OnDelete(long id, string title)
+        {
+            IsBusy = true;
+
+            try
+            {
+                var result = await Handler.DeleteAsync(new DeleteTransactionRequest { Id = id });
+
+                if (result.IsSuccess)
+                {
+                    Snackbar.Add($"Lançamento {title} removido!", Severity.Success);
+                    Transactions.RemoveAll(x => x.Id == id);
+                }
+                else
+                {
+                    Snackbar.Add(result.Message, Severity.Error);
+                }
+            }
+            catch(Exception ex)
+            {
+                Snackbar.Add(ex.Message, Severity.Error);
+            }
+            finally { IsBusy = false; }
+        }
+
         #endregion
 
         #region Public Methods
@@ -96,11 +121,6 @@ namespace Dima.Web.Pages.Transactions
             }
 
             StateHasChanged();
-        }
-
-        private async Task OnDelete(long id, string title)
-        {
-            throw new NotImplementedException();
         }
         #endregion
     }
