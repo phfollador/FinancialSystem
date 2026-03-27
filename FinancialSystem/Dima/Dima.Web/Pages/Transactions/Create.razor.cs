@@ -72,7 +72,7 @@ namespace Dima.Web.Pages.Transactions
             {
                 var result = await TransactionHandler.CreateAsync(InputModel);
                 if (result.IsSuccess)
-                    NavigationManager.NavigateTo("/transactions");
+                    NavigationManager.NavigateTo("/lancamentos/historico");
                 else
                     Snackbar.Add(result.Message, Severity.Error);
             }
