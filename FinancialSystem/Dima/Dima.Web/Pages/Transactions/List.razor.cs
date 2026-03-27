@@ -82,6 +82,26 @@ namespace Dima.Web.Pages.Transactions
             return transaction.Id.ToString().Contains(SearchTerm, StringComparison.OrdinalIgnoreCase) || transaction.Title.Contains(SearchTerm, StringComparison.OrdinalIgnoreCase);
         };
 
+        public async void OnDeleteButtonClickedAsync(long id, string title)
+        {
+            var result = await DialogService.ShowMessageBox(
+                "ATENCAO", 
+                $"Ao prosseguir o lançamento {title} será excluido. Esta é uma ação irreversível! Deseja prosseguir?", 
+                yesText: "EXCLUIR", 
+                cancelText: "Cancelar");
+
+            if(result is true)
+            {
+                await OnDelete(id, title);
+            }
+
+            StateHasChanged();
+        }
+
+        private async Task OnDelete(long id, string title)
+        {
+            throw new NotImplementedException();
+        }
         #endregion
     }
 }
