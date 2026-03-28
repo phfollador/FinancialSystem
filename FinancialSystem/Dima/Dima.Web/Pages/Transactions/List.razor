@@ -3,7 +3,7 @@
 
 <MudText Typo="Typo.h3">Lancamentos</MudText>
 
-<div class="d-flex justify-content-end">
+<div class="d-flex justify-content-end mt-4 mb-4">
     <MudSelect T="int" Label="Mes" @bind-Value="CurrentMonth" AnchorOrigin="Origin.BottomCenter" Class="mr-4">
         @for(var month = 1; month <= 12; month++)
         {
@@ -22,7 +22,9 @@
         }
     </MudSelect>
     <MudSpacer/>
-    <MudButton></MudButton>
+    <MudButton Size="Size.Small" Variant="Variant.Filled" Color="Color.Primary" StartIcon="@Icons.Material.TwoTone.Search" OnClick="() => {}">
+        PESQUISAR
+    </MudButton>
 </div>
 
 <MudDataGrid Items="@Transactions" Filterable="false" QuickFilter="Filter" Hideable="true" ColumnResizeMode="ResizeMode.Column">
