@@ -122,6 +122,13 @@ namespace Dima.Web.Pages.Transactions
 
             StateHasChanged();
         }
+
+        public async Task OnSearchAsync()
+        {
+            await GetTransactions();
+            StateHasChanged();
+        }
+
         #endregion
     }
 }
