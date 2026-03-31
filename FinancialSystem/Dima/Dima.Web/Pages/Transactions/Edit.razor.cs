@@ -59,7 +59,10 @@ namespace Dima.Web.Pages.Transactions
             {
                 var result = await TransactionHandler.UpdateAsync(InputModel);
                 if (result.IsSuccess)
+                {
+                    Snackbar.Add("Lancamento atualizado", Severity.Success);
                     NavigationManager.NavigateTo("/lancamentos/historico");
+                }
                 else
                     Snackbar.Add(result.Message, Severity.Error);
             }
