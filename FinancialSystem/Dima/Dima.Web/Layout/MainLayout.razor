@@ -1,8 +1,10 @@
 ﻿@inherits LayoutComponentBase
 
 <MudThemeProvider @ref="mudThemeProvider" IsDarkMode="isDarkMode" Theme="Configuration.Theme"/>
+@* <MudThemeProvider /> *@
+<MudPopoverProvider />
+<MudDialogProvider />
 <MudSnackbarProvider />
-<MudDialogProvider/>
 
 <AuthorizeView>
     <Authorized>
