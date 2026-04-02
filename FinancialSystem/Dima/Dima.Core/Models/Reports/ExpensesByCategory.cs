@@ -6,7 +6,5 @@ using System.Threading.Tasks;
 
 namespace Dima.Core.Models.Reports
 {
-    internal class ExpensesByCategory
-    {
-    }
+    public record ExpensesByCategory (string UserId, string Category, int Year, decimal Incomes);
 }
