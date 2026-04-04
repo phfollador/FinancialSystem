@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Dima.Core.Requests.Reports
 {
-    public class GetFinancialSummary : Request
+    public class GetFinancialSummaryRequest : Request
     {
     }
 }
