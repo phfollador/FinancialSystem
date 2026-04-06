@@ -24,11 +24,13 @@ namespace Dima.Api.Data
         public DbSet<Transaction> Transactions { get; set; } = null!;
         public DbSet<IncomesAndExpenses> IncomesAndExpenses { get; set; } = null!;
         public DbSet<ExpensesByCategory> ExpensesByCategory { get; set; } = null!;
-        public DbSet<FinancialSummary> FinancialSummary { get; set; } = null!;
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             modelBuilder.ApplyConfigurationsFromAssembly(Assembly.GetExecutingAssembly());
+            modelBuilder.Entity<IncomesAndExpenses>().HasNoKey().ToView("vwIncomesAndExpenses");
+            modelBuilder.Entity<IncomesByCategory>().HasNoKey().ToView("vwGetIncomesByCategory");
+            modelBuilder.Entity<ExpensesByCategory>().HasNoKey().ToView("vwGetExpensesByCategory");
         }
     }
 }
