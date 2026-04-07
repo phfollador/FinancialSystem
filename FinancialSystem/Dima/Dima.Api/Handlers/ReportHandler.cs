@@ -25,12 +25,12 @@ namespace Dima.Api.Handlers
             try
             {
                 var data = await context
-                                .IncomesAndExpenses
-                                .AsNoTracking()
-                                .Where(x => x.UserId == request.UserId)
-                                .OrderBy(x => x.Year)
-                                .ThenBy(x => x.Month)
-                                .ToListAsync();
+                    .IncomesAndExpenses
+                    .AsNoTracking()
+                    .Where(x => x.UserId == request.UserId)
+                    .OrderByDescending(x => x.Year)
+                    .ThenBy(x => x.Month)
+                    .ToListAsync();
 
                 return new Response<List<IncomesAndExpenses>?>(data);
             }
@@ -40,9 +40,24 @@ namespace Dima.Api.Handlers
             }
         }
 
-        public Task<Response<List<IncomesByCategory>?>> GetIncomesByCategoryReportAsync(GetIncomesByCategoryRequest request)
+        public async Task<Response<List<IncomesByCategory>?>> GetIncomesByCategoryReportAsync(GetIncomesByCategoryRequest request)
         {
-            throw new NotImplementedException();
+            try
+            {
+                var data = await context
+                    .IncomesByCategories
+                    .AsNoTracking()
+                    .Where(x => x.UserId == request.UserId)
+                    .OrderByDescending(x => x.Year)
+                    .ThenBy(x => x.Category)
+                    .ToListAsync();
+
+                return new Response<List<IncomesByCategory>?>(data);
+            }
+            catch (Exception ex)
+            {
+                return new Response<List<IncomesByCategory>?>(null, 500, "Nao foi possivel obter as entradas por categoria");
+            }
         }
     }
 }
