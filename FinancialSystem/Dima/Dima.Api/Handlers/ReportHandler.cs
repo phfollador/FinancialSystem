@@ -3,6 +3,8 @@ using Dima.Core.Handlers;
 using Dima.Core.Models.Reports;
 using Dima.Core.Requests.Reports;
 using Dima.Core.Responses;
+using Microsoft.EntityFrameworkCore;
+using static System.Runtime.InteropServices.JavaScript.JSType;
 
 namespace Dima.Api.Handlers
 {
@@ -18,9 +20,24 @@ namespace Dima.Api.Handlers
             throw new NotImplementedException();
         }
 
-        public Task<Response<List<IncomesAndExpenses>?>> GetIncomesAndExpensesReportAsync(GetIncomesAndExpensesRequest request)
+        public async Task<Response<List<IncomesAndExpenses>?>> GetIncomesAndExpensesReportAsync(GetIncomesAndExpensesRequest request)
         {
-            throw new NotImplementedException();
+            try
+            {
+                var data = await context
+                                .IncomesAndExpenses
+                                .AsNoTracking()
+                                .Where(x => x.UserId == request.UserId)
+                                .OrderBy(x => x.Year)
+                                .ThenBy(x => x.Month)
+                                .ToListAsync();
+
+                return new Response<List<IncomesAndExpenses>?>(data);
+            }
+            catch (Exception ex) 
+            {
+                return new Response<List<IncomesAndExpenses>?>(null, 500, "Nao foi possivel obter as entradas e saidas");
+            }
         }
 
         public Task<Response<List<IncomesByCategory>?>> GetIncomesByCategoryReportAsync(GetIncomesByCategoryRequest request)
