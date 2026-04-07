@@ -10,9 +10,24 @@ namespace Dima.Api.Handlers
 {
     public class ReportHandler(AppDbContext context) : IReportHandler
     {
-        public Task<Response<List<ExpensesByCategory>?>> GetExpensesByCategoryReportAsync(GetExpensesByCategoryRequest request)
+        public async Task<Response<List<ExpensesByCategory>?>> GetExpensesByCategoryReportAsync(GetExpensesByCategoryRequest request)
         {
-            throw new NotImplementedException();
+            try
+            {
+                var data = await context
+                    .ExpensesByCategories
+                    .AsNoTracking()
+                    .Where(x => x.UserId == request.UserId)
+                    .OrderByDescending(x => x.Year)
+                    .ThenBy(x => x.Category)
+                    .ToListAsync();
+
+                return new Response<List<ExpensesByCategory>?>(data);
+            }
+            catch (Exception ex)
+            {
+                return new Response<List<ExpensesByCategory>?>(null, 500, "Nao foi possivel obter as saidas por categoria");
+            }
         }
 
         public Task<Response<FinancialSummary?>> GetFinancialSummaryReportAsync(GetFinancialSummaryRequest request)
