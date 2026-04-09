@@ -10,7 +10,7 @@ namespace Dima.Api.Endpoints.Reports
     public class GetIncomesByCategoryEndpoint : IEndpoint
     {
         public static void Map(IEndpointRouteBuilder app)
-            => app.MapGet("/expenses", HandleAsync)
+            => app.MapGet("/incomes", HandleAsync)
             .Produces<Response<List<IncomesByCategory>?>>();
 
         private static async Task<IResult> HandleAsync(ClaimsPrincipal user, GetIncomesByCategoryRequest request, IReportHandler handler)
