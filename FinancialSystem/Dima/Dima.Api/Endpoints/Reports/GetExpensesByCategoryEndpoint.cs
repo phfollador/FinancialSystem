@@ -13,8 +13,13 @@ namespace Dima.Api.Endpoints.Reports
             => app.MapGet("/expenses", HandleAsync)
             .Produces<Response<List<ExpensesByCategory>?>>();
 
-        private static async Task<IResult> HandleAsync(ClaimsPrincipal user, GetExpensesByCategoryRequest request, IReportHandler handler)
+        private static async Task<IResult> HandleAsync(ClaimsPrincipal user, IReportHandler handler)
         {
+            var request = new GetExpensesByCategoryRequest
+            {
+                UserId = user.Identity?.Name ?? string.Empty
+            };
+
             request.UserId = user.Identity?.Name ?? string.Empty;
             var result = await handler.GetExpensesByCategoryReportAsync(request);
             return result.IsSuccess ? TypedResults.Ok(result) : TypedResults.BadRequest(result);
