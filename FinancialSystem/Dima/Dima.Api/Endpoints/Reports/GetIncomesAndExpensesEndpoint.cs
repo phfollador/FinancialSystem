@@ -13,9 +13,13 @@ namespace Dima.Api.Endpoints.Reports
             => app.MapGet("/incomes-expenses", HandleAsync)
             .Produces<Response<List<IncomesAndExpenses>?>>();
 
-        private static async Task<IResult> HandleAsync(ClaimsPrincipal user, GetIncomesAndExpensesRequest request, IReportHandler handler)
+        private static async Task<IResult> HandleAsync(ClaimsPrincipal user, IReportHandler handler)
         {
-            request.UserId = user.Identity?.Name ?? string.Empty;
+            var request = new GetIncomesAndExpensesRequest
+            {
+                UserId = user.Identity?.Name ?? string.Empty
+            };
+
             var result = await handler.GetIncomesAndExpensesReportAsync(request);
             return result.IsSuccess ? TypedResults.Ok(result) : TypedResults.BadRequest(result);
         }
