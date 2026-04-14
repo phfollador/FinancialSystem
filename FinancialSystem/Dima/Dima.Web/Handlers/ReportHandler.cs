@@ -12,22 +12,22 @@ namespace Dima.Web.Handlers
 
         public async Task<Response<List<ExpensesByCategory>?>> GetExpensesByCategoryReportAsync(GetExpensesByCategoryRequest request)
         {
-            return await httpClient.GetFromJsonAsync<Response<List<ExpensesByCategory>?>>("") ?? new Response<List<ExpensesByCategory>?>(null, 400, "Nao foi possivel obter os dados");
+            return await httpClient.GetFromJsonAsync<Response<List<ExpensesByCategory>?>>($"/v1/reports/expenses") ?? new Response<List<ExpensesByCategory>?>(null, 400, "Nao foi possivel obter os dados");
         }
 
         public async Task<Response<FinancialSummary?>> GetFinancialSummaryReportAsync(GetFinancialSummaryRequest request)
         {
-            return await httpClient.GetFromJsonAsync<Response<FinancialSummary?>>("") ?? new Response<FinancialSummary?>(null, 400, "Nao foi possivel obter os dados");
+            return await httpClient.GetFromJsonAsync<Response<FinancialSummary?>>($"/v1/reports/summary") ?? new Response<FinancialSummary?>(null, 400, "Nao foi possivel obter os dados");
         }
 
         public async Task<Response<List<IncomesAndExpenses>?>> GetIncomesAndExpensesReportAsync(GetIncomesAndExpensesRequest request)
         {
-            return await httpClient.GetFromJsonAsync<Response<List<IncomesAndExpenses>?>>("") ?? new Response<List<IncomesAndExpenses>?>(null, 400, "Nao foi possivel obter os dados");
+            return await httpClient.GetFromJsonAsync<Response<List<IncomesAndExpenses>?>>($"/v1/reports/incomes-expenses") ?? new Response<List<IncomesAndExpenses>?>(null, 400, "Nao foi possivel obter os dados");
         }
 
         public async Task<Response<List<IncomesByCategory>?>> GetIncomesByCategoryReportAsync(GetIncomesByCategoryRequest request)
         {
-            return await httpClient.GetFromJsonAsync<Response<List<IncomesByCategory>?>>("") ?? new Response<List<IncomesByCategory>?>(null, 400, "Nao foi possivel obter os dados");
+            return await httpClient.GetFromJsonAsync<Response<List<IncomesByCategory>?>>($"/v1/reports/incomes") ?? new Response<List<IncomesByCategory>?>(null, 400, "Nao foi possivel obter os dados");
         }
     }
 }
