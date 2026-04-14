@@ -2,29 +2,32 @@
 using Dima.Core.Models.Reports;
 using Dima.Core.Requests.Reports;
 using Dima.Core.Responses;
+using System.Net.Http.Json;
 
 namespace Dima.Web.Handlers
 {
-    public class ReportHandler : IReportHandler
+    public class ReportHandler(IHttpClientFactory httpClientFactory) : IReportHandler
     {
-        public Task<Response<List<ExpensesByCategory>?>> GetExpensesByCategoryReportAsync(GetExpensesByCategoryRequest request)
+        private readonly HttpClient httpClient = httpClientFactory.CreateClient(Configuration.HttpClientName);
+
+        public async Task<Response<List<ExpensesByCategory>?>> GetExpensesByCategoryReportAsync(GetExpensesByCategoryRequest request)
         {
-            throw new NotImplementedException();
+            return await httpClient.GetFromJsonAsync<Response<List<ExpensesByCategory>?>>("") ?? new Response<List<ExpensesByCategory>?>(null, 400, "Nao foi possivel obter os dados");
         }
 
-        public Task<Response<FinancialSummary?>> GetFinancialSummaryReportAsync(GetFinancialSummaryRequest request)
+        public async Task<Response<FinancialSummary?>> GetFinancialSummaryReportAsync(GetFinancialSummaryRequest request)
         {
-            throw new NotImplementedException();
+            return await httpClient.GetFromJsonAsync<Response<FinancialSummary?>>("") ?? new Response<FinancialSummary?>(null, 400, "Nao foi possivel obter os dados");
         }
 
-        public Task<Response<List<IncomesAndExpenses>?>> GetIncomesAndExpensesReportAsync(GetIncomesAndExpensesRequest request)
+        public async Task<Response<List<IncomesAndExpenses>?>> GetIncomesAndExpensesReportAsync(GetIncomesAndExpensesRequest request)
         {
-            throw new NotImplementedException();
+            return await httpClient.GetFromJsonAsync<Response<List<IncomesAndExpenses>?>>("") ?? new Response<List<IncomesAndExpenses>?>(null, 400, "Nao foi possivel obter os dados");
         }
 
-        public Task<Response<List<IncomesByCategory>?>> GetIncomesByCategoryReportAsync(GetIncomesByCategoryRequest request)
+        public async Task<Response<List<IncomesByCategory>?>> GetIncomesByCategoryReportAsync(GetIncomesByCategoryRequest request)
         {
-            throw new NotImplementedException();
+            return await httpClient.GetFromJsonAsync<Response<List<IncomesByCategory>?>>("") ?? new Response<List<IncomesByCategory>?>(null, 400, "Nao foi possivel obter os dados");
         }
     }
 }
