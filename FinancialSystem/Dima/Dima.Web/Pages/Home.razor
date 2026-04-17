@@ -1,24 +1,43 @@
 ﻿@page "/"
 
 <MudGrid Justify="Justify.Center">
-    <MudItem>
-        <MudCard>
-            CARD
+    <MudItem lg="6" md="12" sm="12" xs="12">
+        <MudCard Class="pd-8">
+            <MudCardHeader>
+                <MudText Typo="Typo.h6">Resumo Financeiro</MudText>
+            </MudCardHeader>
+            <MudCardContent>
+            </MudCardContent>
         </MudCard>
     </MudItem>
-        <MudItem>
-        <MudCard>
-            CARD
+    <MudItem lg="6" md="12" sm="12" xs="12">
+        <MudCard Class="pd-8">
+            <MudCardHeader>
+                <MudText Typo="Typo.h6">Receitas e despesas</MudText>
+            </MudCardHeader>
+            <MudCardContent>
+                <IncomesAndExpensesChart/>
+            </MudCardContent>
         </MudCard>
     </MudItem>
-        <MudItem>
-        <MudCard>
-            CARD
+    <MudItem lg="6" md="12" sm="12" xs="12">
+        <MudCard Class="pd-8">
+            <MudCardHeader>
+                <MudText Typo="Typo.h6">Entradas por categoria</MudText>
+            </MudCardHeader>
+            <MudCardContent>
+                <IncomesByCategoryChart/>
+            </MudCardContent>
         </MudCard>
     </MudItem>
-        <MudItem>
-        <MudCard>
-            CARD
+    <MudItem lg="6" md="12" sm="12" xs="12">
+        <MudCard Class="pd-8">
+            <MudCardHeader>
+                <MudText Typo="Typo.h6">Despesas por categoria</MudText>
+            </MudCardHeader>
+            <MudCardContent>
+                <ExpensesByCategoryChart/>
+            </MudCardContent>
         </MudCard>
     </MudItem>
 </MudGrid>
