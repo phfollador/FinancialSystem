@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Dima.Core.Models.Reports
+namespace Dima.Core.Models
 {
     internal class Product
     {
