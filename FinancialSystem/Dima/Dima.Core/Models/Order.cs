@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Dima.Core.Enums;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -10,6 +11,7 @@ namespace Dima.Core.Models
     {
         public long Id { get; set; }
         public string Number { get; set; } = Guid.NewGuid().ToString("N")[..8]; // pega os 8 primeiros caracteres
+        public EPaymentGateway Gateway { get; set; } = EPaymentGateway.Stripe;
         public string UserId { get; set; } = string.Empty;
         public long ProductId { get; set; }
         public Product Product { get; set; } = null!;
