@@ -16,6 +16,7 @@ namespace Dima.Core.Models
         public DateTime CreatedAt { get; set; } = DateTime.Now;
         public DateTime UpdatedAt { get; set; } = DateTime.Now;
         public EPaymentGateway Gateway { get; set; } = EPaymentGateway.Stripe;
+        public EOrderStatus Status { get; set; } = EOrderStatus.WaitingPayment;
         public string UserId { get; set; } = string.Empty;
         public long ProductId { get; set; }
         public Product Product { get; set; } = null!;
