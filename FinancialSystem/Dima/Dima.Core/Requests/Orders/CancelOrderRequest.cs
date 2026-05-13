@@ -6,7 +6,8 @@ using System.Threading.Tasks;
 
 namespace Dima.Core.Requests.Orders
 {
-    internal class CancelOrderRequest
+    public class CancelOrderRequest : Request
     {
+        public long Id { get; set; }
     }
 }
