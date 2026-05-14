@@ -6,7 +6,9 @@ using System.Threading.Tasks;
 
 namespace Dima.Core.Requests.Orders
 {
-    internal class CreateOrderRequest
+    public class CreateOrderRequest : Request
     {
+        public long ProductId { get; set; }
+        public long VoucherId { get; set; }
     }
 }
