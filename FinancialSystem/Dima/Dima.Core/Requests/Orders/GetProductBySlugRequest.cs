@@ -6,7 +6,8 @@ using System.Threading.Tasks;
 
 namespace Dima.Core.Requests.Orders
 {
-    internal class GetProductBySlugRequest
+    public class GetProductBySlugRequest : Request
     {
+        public string Slug { get; set; } = string.Empty;
     }
 }
