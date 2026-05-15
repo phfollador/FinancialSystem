@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Dima.Core.Requests.Orders
 {
-    internal class GetAllOrdersRequest
+    public class GetAllOrdersRequest : PagedRequest
     {
     }
 }
