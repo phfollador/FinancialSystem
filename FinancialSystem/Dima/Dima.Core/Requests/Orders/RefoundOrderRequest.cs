@@ -6,7 +6,8 @@ using System.Threading.Tasks;
 
 namespace Dima.Core.Requests.Orders
 {
-    internal class RefoundOrderRequest
+    public class RefoundOrderRequest : Request
     {
+        public long Id { get; set; }
     }
 }
