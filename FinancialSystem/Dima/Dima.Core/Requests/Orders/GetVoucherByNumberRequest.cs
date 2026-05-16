@@ -6,7 +6,8 @@ using System.Threading.Tasks;
 
 namespace Dima.Core.Requests.Orders
 {
-    internal class GetVoucherByNumberRequest
+    public class GetVoucherByNumberRequest : Request
     {
+        public string Number { get; set; } = string.Empty;
     }
 }
