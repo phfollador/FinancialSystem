@@ -6,7 +6,9 @@ using System.Threading.Tasks;
 
 namespace Dima.Core.Requests.Orders
 {
-    internal class PayOrderRequest
+    public class PayOrderRequest : Request
     {
+        public long Id { get; set; }
+        public string ExternalReference { get; set; } = string.Empty;
     }
 }
