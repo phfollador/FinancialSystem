@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
-namespace Dima.Api.Data.Mappings.Identity
+namespace Dima.Api.Data.Mappings
 {
     public class VoucherMapping : IEntityTypeConfiguration<Voucher>
     {
