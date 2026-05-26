@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace Dima.Core.Handlers
 {
-    internal interface IVoucherHandler
+    public interface IVoucherHandler
     {
         Task<Response<Voucher?>> GetByNumberAsync(GetVoucherByNumberRequest request);
     }
