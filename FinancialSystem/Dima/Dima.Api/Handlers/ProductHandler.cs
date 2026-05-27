@@ -13,8 +13,17 @@ namespace Dima.Api.Handlers
         {
             try
             {
-                var query = context.Products.AsNoTracking().Where(x => x.IsActive == true).OrderBy(x => x.Title);
-                var products = await query.Skip((request.PageNumber) * request.PageSize).Take(request.PageSize).ToListAsync();
+                var query = context
+                    .Products
+                    .AsNoTracking()
+                    .Where(x => x.IsActive == true)
+                    .OrderBy(x => x.Title);
+
+                var products = await query
+                    .Skip((request.PageNumber) * request.PageSize)
+                    .Take(request.PageSize)
+                    .ToListAsync();
+
                 var count = await query.CountAsync();
 
                 return new PagedResponse<List<Product>?>(products, count, request.PageNumber, request.PageSize);
@@ -29,7 +38,10 @@ namespace Dima.Api.Handlers
         {
             try
             {
-                var product = await context.Products.AsNoTracking().FirstOrDefaultAsync(x => x.Slug == request.Slug && x.IsActive == true);
+                var product = await context
+                    .Products
+                    .AsNoTracking()
+                    .FirstOrDefaultAsync(x => x.Slug == request.Slug && x.IsActive == true);
 
                 return product is null ? new Response<Product?>(null, 404, "Produto nao encontrado") : new Response<Product?>(product);
             }
