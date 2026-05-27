@@ -1,6 +1,20 @@
-﻿namespace Dima.Api.Handlers
+﻿using Dima.Core.Handlers;
+using Dima.Core.Models;
+using Dima.Core.Requests.Orders;
+using Dima.Core.Responses;
+
+namespace Dima.Api.Handlers
 {
-    public class ProductHandler
+    public class ProductHandler : IProductHandler
     {
+        public Task<PagedResponse<List<Product>?>> GetAllAsync(GetAllProductsRequest request)
+        {
+            throw new NotImplementedException();
+        }
+
+        public Task<Response<Product?>> GetBySlugAsync(GetProductBySlugRequest request)
+        {
+            throw new NotImplementedException();
+        }
     }
 }
