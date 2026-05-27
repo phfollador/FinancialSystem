@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace Dima.Core.Handlers
 {
-    internal interface IProductHandler
+    public interface IProductHandler
     {
         Task<PagedResponse<List<Product>?>> GetAllAsync(GetAllProductsRequest request);
         Task<Response<Product?>> GetBySlugAsync(GetProductBySlugRequest request);
