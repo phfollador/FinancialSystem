@@ -25,9 +25,18 @@ namespace Dima.Api.Handlers
             }
         }
 
-        public Task<Response<Product?>> GetBySlugAsync(GetProductBySlugRequest request)
+        public async Task<Response<Product?>> GetBySlugAsync(GetProductBySlugRequest request)
         {
-            throw new NotImplementedException();
+            try
+            {
+                var product = await context.Products.AsNoTracking().FirstOrDefaultAsync(x => x.Slug == request.Slug && x.IsActive == true);
+
+                return product is null ? new Response<Product?>(null, 404, "Produto nao encontrado") : new Response<Product?>(product);
+            }
+            catch
+            {
+                return new Response<Product?>(null, 500, "Nao foi possivel recuperar o produto");
+            }
         }
     }
 }
