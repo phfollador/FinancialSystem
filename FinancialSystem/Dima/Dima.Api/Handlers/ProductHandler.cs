@@ -1,15 +1,28 @@
-﻿using Dima.Core.Handlers;
+﻿using Dima.Api.Data;
+using Dima.Core.Handlers;
 using Dima.Core.Models;
 using Dima.Core.Requests.Orders;
 using Dima.Core.Responses;
+using Microsoft.EntityFrameworkCore;
 
 namespace Dima.Api.Handlers
 {
-    public class ProductHandler : IProductHandler
+    public class ProductHandler(AppDbContext context) : IProductHandler
     {
-        public Task<PagedResponse<List<Product>?>> GetAllAsync(GetAllProductsRequest request)
+        public async Task<PagedResponse<List<Product>?>> GetAllAsync(GetAllProductsRequest request)
         {
-            throw new NotImplementedException();
+            try
+            {
+                var query = context.Products.AsNoTracking().Where(x => x.IsActive == true).OrderBy(x => x.Title);
+                var products = await query.Skip((request.PageNumber) * request.PageSize).Take(request.PageSize).ToListAsync();
+                var count = await query.CountAsync();
+
+                return new PagedResponse<List<Product>?>(products, count, request.PageNumber, request.PageSize);
+            }
+            catch
+            {
+                return new PagedResponse<List<Product>?>(null, 500, "Nao foi possivel encontrar a lista de produtos");
+            }
         }
 
         public Task<Response<Product?>> GetBySlugAsync(GetProductBySlugRequest request)
