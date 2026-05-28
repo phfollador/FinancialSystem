@@ -10,7 +10,7 @@ using System.Threading.Tasks;
 
 namespace Dima.Core.Handlers
 {
-    internal interface IOrderHandler
+    public interface IOrderHandler
     {
         Task<Response<Order?>> CancelAsync(CancelOrderRequest request);
         Task<Response<Order?>> CreateAsync(CreateOrderRequest request);
