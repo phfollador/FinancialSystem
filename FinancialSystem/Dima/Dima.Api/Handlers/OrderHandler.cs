@@ -1,4 +1,5 @@
 ﻿using Dima.Api.Data;
+using Dima.Core.Enums;
 using Dima.Core.Handlers;
 using Dima.Core.Models;
 using Dima.Core.Requests.Orders;
@@ -27,6 +28,9 @@ namespace Dima.Api.Handlers
             {
                 return new Response<Order?>(null, 500, "Falha ao obter pedido");
             }
+
+            if (order.Status == !EOrderStatus.WaitingPayment)
+                return new Response<Order?>(null, 400, "O pedido nao pode ser cancelado");
         }
 
         public Task<Response<Order?>> CreateAsync(CreateOrderRequest request)
