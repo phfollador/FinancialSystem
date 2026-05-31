@@ -11,6 +11,7 @@ namespace Dima.Core.Enums
         WaitingPayment = 1,
         Paid = 2,
         Canceled = 3,
-        Refounded = 4
+        Refounded = 4,
+        Expired = 5
     }
 }

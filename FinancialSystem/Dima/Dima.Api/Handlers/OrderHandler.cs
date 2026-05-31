@@ -29,8 +29,19 @@ namespace Dima.Api.Handlers
                 return new Response<Order?>(null, 500, "Falha ao obter pedido");
             }
 
-            if (order.Status == !EOrderStatus.WaitingPayment)
-                return new Response<Order?>(null, 400, "O pedido nao pode ser cancelado");
+            switch (order.Status)
+            {
+                case EOrderStatus.Canceled:
+                    return new Response<Order?>(order, 400, "Esse pedido ja foi cancelado");
+                case EOrderStatus.WaitingPayment:
+                    break;
+                case EOrderStatus.Paid:
+                    return new Response<Order?>(order, 400, "Esse pedido ja foi pago e nao pode ser cancelado");
+                case EOrderStatus.Refounded:
+                    return new Response<Order?>(order, 400, "Esse pedido ja foi reembolsado e nao pode ser cancelado");
+                default:
+                    return new Response<Order?>(order, 400, "Esse pedido nao pode ser cancelado");
+            }
         }
 
         public Task<Response<Order?>> CreateAsync(CreateOrderRequest request)
