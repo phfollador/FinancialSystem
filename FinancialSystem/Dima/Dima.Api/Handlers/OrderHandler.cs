@@ -42,6 +42,21 @@ namespace Dima.Api.Handlers
                 default:
                     return new Response<Order?>(order, 400, "Esse pedido nao pode ser cancelado");
             }
+
+            order.Status = EOrderStatus.Canceled;
+            order.UpdatedAt = DateTime.Now;
+
+            try
+            {
+                context.Orders.Update(order);
+                await context.SaveChangesAsync();
+            }
+            catch
+            {
+                return new Response<Order?>(order, 500, "Nao foi possivel cancelar seu pedido");
+            }
+
+            return new Response<Order?>(order, 200, $"Pedido {order.Number} cancelado com sucesso");
         }
 
         public Task<Response<Order?>> CreateAsync(CreateOrderRequest request)
