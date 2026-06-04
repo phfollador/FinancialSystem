@@ -189,9 +189,54 @@ namespace Dima.Api.Handlers
             return new Response<Order?>(order, 200, $"Pedido {order.Number} pago com sucesso");
         }
 
-        public Task<Response<Order?>> RefoundAsync(RefoundOrderRequest request)
+        public async Task<Response<Order?>> RefoundAsync(RefoundOrderRequest request)
         {
-            throw new NotImplementedException();
+            Order? order;
+
+            try
+            {
+                order = await context.Orders.FirstOrDefaultAsync(x => x.Id == request.Id && x.UserId == request.UserId);
+
+                if(order is null)
+                    return new Response<Order?>(null, 404, "Esse pedido nao foi encontrado");
+            }
+            catch
+            {
+                return new Response<Order?>(null, 500, "Nao foi possivel recuperar seu pedido");
+            }
+
+            switch (order.Status)
+            {
+                case EOrderStatus.Canceled:
+                    return new Response<Order?>(order, 400, "Esse pedido foi cancelado e nao pode ser estornado");
+
+                case EOrderStatus.Paid:
+                    break;
+
+                case EOrderStatus.Refounded:
+                    return new Response<Order?>(order, 400, "Esse pedido ja foi reembolsado");
+
+                case EOrderStatus.WaitingPayment:
+                    return new Response<Order?>(order, 400, "Esse pedido ainda nao foi pago e nao pode ser reembolsado");
+
+                default:
+                    return new Response<Order?>(order, 400, "Nao foi possivel reembolsar o pedido");
+            }
+
+            order.Status = EOrderStatus.Refounded;
+            order.UpdatedAt = DateTime.Now;
+
+            try
+            {
+                context.Orders.Update(order);
+                await context.SaveChangesAsync();
+            }
+            catch
+            {
+                return new Response<Order?>(order, 500, "Falha ao reembolsar o pagamento");
+            }
+
+            return new Response<Order?>(order, 200, $"Pedido {order.Number} estornado com sucesso");
         }
     }
 }
