@@ -128,9 +128,31 @@ namespace Dima.Api.Handlers
             return new Response<Order?>(order, 201, $"Pedido n {order.Number} feito com sucesso");
         }
 
-        public Task<PagedResponse<List<Order>?>> GetAllAsync(GetAllOrdersRequest request)
+        public async Task<PagedResponse<List<Order>?>> GetAllAsync(GetAllOrdersRequest request)
         {
-            throw new NotImplementedException();
+            try
+            {
+                var query = context
+                    .Orders
+                    .AsNoTracking()
+                    .Include(x => x.Product)
+                    .Include(x => x.Voucher)
+                    .Where(x => x.UserId == request.UserId)
+                    .OrderByDescending(x => x.CreatedAt);
+
+                var orders = await query
+                    .Skip((request.PageNumber - 1) * request.PageSize)
+                    .Take(request.PageSize)
+                    .ToListAsync();
+
+                var count = await query.CountAsync();
+
+                return new PagedResponse<List<Order>?>(orders, count, request.PageNumber, request.PageSize);
+            }
+            catch
+            {
+                return new PagedResponse<List<Order>?>(null, 500, "Nao foi possivel obter os pedidos");
+            }
         }
 
         public Task<PagedResponse<Order?>> GetByNumberAsync(GetOrderByNumberRequest request)
