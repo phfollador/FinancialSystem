@@ -1,4 +1,5 @@
 ﻿using Dima.Api.Data.Common.Api;
+using Dima.Core.Handlers;
 
 namespace Dima.Api.Endpoints.Orders
 {
@@ -7,6 +8,11 @@ namespace Dima.Api.Endpoints.Orders
         public static void Map(IEndpointRouteBuilder app)
         {
             throw new NotImplementedException();
+        }
+
+        private static async Task<IResult> HandleAsync(IProductHandler handler, string slug)
+        {
+
         }
     }
 }
