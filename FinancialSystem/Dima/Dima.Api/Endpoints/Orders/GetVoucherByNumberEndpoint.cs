@@ -1,6 +1,8 @@
-﻿namespace Dima.Api.Endpoints.Orders
+﻿using Dima.Api.Data.Common.Api;
+
+namespace Dima.Api.Endpoints.Orders
 {
-    public class GetVoucherByNumberEndpoint
+    public class GetVoucherByNumberEndpoint : IEndpoint
     {
     }
 }
