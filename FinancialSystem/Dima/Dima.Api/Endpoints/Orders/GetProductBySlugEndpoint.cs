@@ -10,7 +10,7 @@ namespace Dima.Api.Endpoints.Orders
     {
         public static void Map(IEndpointRouteBuilder app) 
             => app.MapGet("/{slug}", HandleAsync)
-            .WithName("Products: Get By Slug")
+            .WithName("Products: Get by slug")
             .WithSummary("Recupera um produto")
             .WithDescription("Rcupera um produto")
             .WithOrder(2)
