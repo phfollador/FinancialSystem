@@ -180,7 +180,10 @@ namespace Dima.Api.Handlers
 
             try
             {
-                order = await context.Orders.FirstOrDefaultAsync(x => x.Id == request.Id && x.UserId == request.UserId);
+                order = await context.Orders
+                    .Include(x => x.Product)
+                    .Include(x => x.Voucher)
+                    .FirstOrDefaultAsync(x => x.Id == request.Id && x.UserId == request.UserId);
 
                 if (order is null)
                     return new Response<Order?>(null, 404, "Pedido nao encontrado");
