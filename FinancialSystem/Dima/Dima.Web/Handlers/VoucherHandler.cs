@@ -1,6 +1,15 @@
-﻿namespace Dima.Web.Handlers
+﻿using Dima.Core.Handlers;
+using Dima.Core.Models;
+using Dima.Core.Requests.Orders;
+using Dima.Core.Responses;
+
+namespace Dima.Web.Handlers
 {
-    public class VoucherHandler
+    public class VoucherHandler : IVoucherHandler
     {
+        public Task<Response<Voucher?>> GetByNumberAsync(GetVoucherByNumberRequest request)
+        {
+            throw new NotImplementedException();
+        }
     }
 }
