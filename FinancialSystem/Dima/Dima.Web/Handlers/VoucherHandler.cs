@@ -5,8 +5,9 @@ using Dima.Core.Responses;
 
 namespace Dima.Web.Handlers
 {
-    public class VoucherHandler : IVoucherHandler
+    public class VoucherHandler(IHttpClientFactory httpClientFactory) : IVoucherHandler
     {
+        private readonly HttpClient client = httpClientFactory.CreateClient(Configuration.HttpClientName);
         public Task<Response<Voucher?>> GetByNumberAsync(GetVoucherByNumberRequest request)
         {
             throw new NotImplementedException();
