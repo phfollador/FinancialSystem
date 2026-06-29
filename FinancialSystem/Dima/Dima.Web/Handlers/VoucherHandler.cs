@@ -2,15 +2,17 @@
 using Dima.Core.Models;
 using Dima.Core.Requests.Orders;
 using Dima.Core.Responses;
+using System.Net.Http.Json;
 
 namespace Dima.Web.Handlers
 {
     public class VoucherHandler(IHttpClientFactory httpClientFactory) : IVoucherHandler
     {
         private readonly HttpClient client = httpClientFactory.CreateClient(Configuration.HttpClientName);
-        public Task<Response<Voucher?>> GetByNumberAsync(GetVoucherByNumberRequest request)
+
+        public async Task<Response<Voucher?>> GetByNumberAsync(GetVoucherByNumberRequest request)
         {
-            throw new NotImplementedException();
+            return await client.GetFromJsonAsync<Response<Voucher?>>($"v1/vouchers/{request.Number}") ?? new Response<Voucher?>(null, 400, "Nao foi possivel obter o voucher");
         }
     }
 }
