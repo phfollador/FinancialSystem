@@ -5,8 +5,10 @@ using Dima.Core.Responses;
 
 namespace Dima.Web.Handlers
 {
-    public class ProductHandler : IProductHandler
+    public class ProductHandler(IHttpClientFactory httpClientFactory) : IProductHandler
     {
+        private readonly HttpClient client = httpClientFactory.CreateClient(Configuration.HttpClientName);
+
         public Task<PagedResponse<List<Product>?>> GetAllAsync(GetAllProductsRequest request)
         {
             throw new NotImplementedException();
