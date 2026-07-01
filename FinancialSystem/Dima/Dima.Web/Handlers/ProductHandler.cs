@@ -2,6 +2,7 @@
 using Dima.Core.Models;
 using Dima.Core.Requests.Orders;
 using Dima.Core.Responses;
+using System.Net.Http.Json;
 
 namespace Dima.Web.Handlers
 {
@@ -9,14 +10,14 @@ namespace Dima.Web.Handlers
     {
         private readonly HttpClient client = httpClientFactory.CreateClient(Configuration.HttpClientName);
 
-        public Task<PagedResponse<List<Product>?>> GetAllAsync(GetAllProductsRequest request)
+        public async Task<PagedResponse<List<Product>?>> GetAllAsync(GetAllProductsRequest request)
         {
-            throw new NotImplementedException();
+            return await client.GetFromJsonAsync<PagedResponse<List<Product>?>>($"v1/products") ?? new PagedResponse<List<Product>?>(null, 400, "Nao foi possivel obter os produtos");
         }
 
-        public Task<Response<Product?>> GetBySlugAsync(GetProductBySlugRequest request)
+        public async Task<Response<Product?>> GetBySlugAsync(GetProductBySlugRequest request)
         {
-            throw new NotImplementedException();
+            return await client.GetFromJsonAsync<Response<Product?>>($"v1/products/{request.Slug}") ?? new Response<Product?>(null, 400, "Nao foi possivel obter o produto");
         }
     }
 }
