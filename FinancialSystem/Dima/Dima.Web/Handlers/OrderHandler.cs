@@ -5,7 +5,7 @@ using Dima.Core.Responses;
 
 namespace Dima.Web.Handlers
 {
-    public class OrderHandler : IOrderHandler
+    public class OrderHandler(IHttpClientFactory httpClientFactory) : IOrderHandler
     {
         public Task<Response<Order?>> CancelAsync(CancelOrderRequest request)
         {
