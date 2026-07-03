@@ -7,6 +7,8 @@ namespace Dima.Web.Handlers
 {
     public class OrderHandler(IHttpClientFactory httpClientFactory) : IOrderHandler
     {
+        private readonly HttpClient client = httpClientFactory.CreateClient(Configuration.HttpClientName);
+
         public Task<Response<Order?>> CancelAsync(CancelOrderRequest request)
         {
             throw new NotImplementedException();
