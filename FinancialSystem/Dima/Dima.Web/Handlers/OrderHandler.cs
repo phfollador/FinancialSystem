@@ -2,6 +2,7 @@
 using Dima.Core.Models;
 using Dima.Core.Requests.Orders;
 using Dima.Core.Responses;
+using System.Net.Http.Json;
 
 namespace Dima.Web.Handlers
 {
@@ -9,9 +10,10 @@ namespace Dima.Web.Handlers
     {
         private readonly HttpClient client = httpClientFactory.CreateClient(Configuration.HttpClientName);
 
-        public Task<Response<Order?>> CancelAsync(CancelOrderRequest request)
+        public async Task<Response<Order?>> CancelAsync(CancelOrderRequest request)
         {
-            throw new NotImplementedException();
+            var result = await client.PostAsJsonAsync($"v1/orders/{request.Id}/cancel", request);
+            return await result.Content.ReadFromJsonAsync<Response<Order?>>() ?? new Response<Order?>(null, 400, "Nao foi possivel cancelar o pedido");
         }
 
         public Task<Response<Order?>> CreateAsync(CreateOrderRequest request)
