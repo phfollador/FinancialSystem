@@ -16,9 +16,10 @@ namespace Dima.Web.Handlers
             return await result.Content.ReadFromJsonAsync<Response<Order?>>() ?? new Response<Order?>(null, 400, "Nao foi possivel cancelar o pedido");
         }
 
-        public Task<Response<Order?>> CreateAsync(CreateOrderRequest request)
+        public async Task<Response<Order?>> CreateAsync(CreateOrderRequest request)
         {
-            throw new NotImplementedException();
+            var result = await client.PostAsJsonAsync($"v1/orders", request);
+            return await result.Content.ReadFromJsonAsync<Response<Order?>>() ?? new Response<Order?>(null, 400, "Nao foi possivel criar o pedido");
         }
 
         public Task<PagedResponse<List<Order>?>> GetAllAsync(GetAllOrdersRequest request)
