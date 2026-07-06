@@ -32,9 +32,10 @@ namespace Dima.Web.Handlers
             throw new NotImplementedException();
         }
 
-        public Task<Response<Order?>> PayAsync(PayOrderRequest request)
+        public async Task<Response<Order?>> PayAsync(PayOrderRequest request)
         {
-            throw new NotImplementedException();
+            var result = await client.PostAsJsonAsync($"v1/orders/{request.Id}/pay", request);
+            return await result.Content.ReadFromJsonAsync<Response<Order?>>() ?? new Response<Order?>(null, 400, "Nao foi possivel pagar o pedido");
         }
 
         public Task<Response<Order?>> RefoundAsync(RefoundOrderRequest request)
