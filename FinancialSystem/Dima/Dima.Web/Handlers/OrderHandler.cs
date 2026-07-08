@@ -34,13 +34,14 @@ namespace Dima.Web.Handlers
 
         public async Task<Response<Order?>> PayAsync(PayOrderRequest request)
         {
-            var result = await client.PostAsJsonAsync($"v1/orders/{request.Id}/pay", request);
-            return await result.Content.ReadFromJsonAsync<Response<Order?>>() ?? new Response<Order?>(null, 400, "Nao foi possivel pagar o pedido");
+            var result = await client.PostAsJsonAsync($"v1/orders/{request.Id}/refound", request);
+            return await result.Content.ReadFromJsonAsync<Response<Order?>>() ?? new Response<Order?>(null, 400, "Nao foi possivel reembolsar o pedido");
         }
 
-        public Task<Response<Order?>> RefoundAsync(RefoundOrderRequest request)
+        public async Task<Response<Order?>> RefoundAsync(RefoundOrderRequest request)
         {
-            throw new NotImplementedException();
+            var result = await client.PostAsJsonAsync($"v1/orders/{request.Id}/pay", request);
+            return await result.Content.ReadFromJsonAsync<Response<Order?>>() ?? new Response<Order?>(null, 400, "Nao foi possivel pagar o pedido");
         }
     }
 }
