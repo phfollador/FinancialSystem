@@ -155,7 +155,7 @@ namespace Dima.Api.Handlers
             }
         }
 
-        public async Task<PagedResponse<Order?>> GetByNumberAsync(GetOrderByNumberRequest request)
+        public async Task<Response<Order?>> GetByNumberAsync(GetOrderByNumberRequest request)
         {
             try
             {
@@ -166,11 +166,11 @@ namespace Dima.Api.Handlers
                     .Include(x => x.Voucher)
                     .FirstOrDefaultAsync(x => x.Number == request.Number && x.UserId == request.UserId);
 
-                return order is null ? new PagedResponse<Order?>(null, 404, "Pedido nao encontrado") : new PagedResponse<Order?>(order);
+                return order is null ? new Response<Order?>(null, 404, "Pedido nao encontrado") : new PagedResponse<Order?>(order);
             }
             catch
             {
-                return new PagedResponse<Order?>(null, 500, "Nao foi possivel recuperar esse pedido");
+                return new Response<Order?>(null, 500, "Nao foi possivel recuperar esse pedido");
             }
         }
 

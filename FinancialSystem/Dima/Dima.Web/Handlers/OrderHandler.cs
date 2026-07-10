@@ -27,7 +27,7 @@ namespace Dima.Web.Handlers
             return await client.GetFromJsonAsync<PagedResponse<List<Order>?>>("v1/orders") ?? new PagedResponse<List<Order>?>(null, 400, "Nao foi possivel obter os pedidos");
         }
 
-        public async Task<PagedResponse<Order?>> GetByNumberAsync(GetOrderByNumberRequest request)
+        public async Task<Response<Order?>> GetByNumberAsync(GetOrderByNumberRequest request)
         {
             return await client.GetFromJsonAsync<Response<Order?>>($"v1/orders/{request.Number}") ?? new Response<Order?>(null, 400, "Nao foi possivel obter o pedido");
         }
