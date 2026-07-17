@@ -1,6 +1,8 @@
-﻿namespace Dima.Web.Pages.Products
+﻿using Microsoft.AspNetCore.Components;
+
+namespace Dima.Web.Pages.Products
 {
-    public class List
+    public class ListProductsPage : ComponentBase
     {
     }
 }
