@@ -23,5 +23,13 @@ namespace Dima.Web.Pages.Products
 
         #endregion
 
+        #region Overrides
+
+        protected override Task OnInitializedAsync()
+        {
+            return base.OnInitializedAsync();
+        }
+
+        #endregion
     }
 }
