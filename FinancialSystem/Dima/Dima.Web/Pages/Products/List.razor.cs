@@ -9,6 +9,7 @@ namespace Dima.Web.Pages.Products
     {
         #region Properties
 
+        public bool IsBusy { get; set; } = false;
         public List<Product> Products { get; set; } = [];
 
         #endregion
