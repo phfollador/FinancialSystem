@@ -1,5 +1,6 @@
 ﻿using Dima.Core.Handlers;
 using Dima.Core.Models;
+using Dima.Core.Requests.Orders;
 using Microsoft.AspNetCore.Components;
 using MudBlazor;
 
@@ -26,9 +27,25 @@ namespace Dima.Web.Pages.Products
 
         #region Overrides
 
-        protected override Task OnInitializedAsync()
+        protected override async Task OnInitializedAsync()
         {
-            return base.OnInitializedAsync();
+            IsBusy = true;
+            try
+            {
+                var request = new GetAllProductsRequest();
+                var result = await Handler.GetAllAsync(request);
+
+                if (result.IsSuccess)
+                    Products = result.Data ?? [];
+            }
+            catch
+            {
+
+            }
+            finally
+            {
+                IsBusy = false;
+            }
         }
 
         #endregion
