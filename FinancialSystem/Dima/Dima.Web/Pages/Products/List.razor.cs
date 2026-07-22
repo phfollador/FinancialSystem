@@ -37,10 +37,12 @@ namespace Dima.Web.Pages.Products
 
                 if (result.IsSuccess)
                     Products = result.Data ?? [];
+                else
+                    Snackbar.Add(result.Message, Severity.Error);
             }
-            catch
+            catch(Exception ex)
             {
-
+                Snackbar.Add(ex.Message, Severity.Error);
             }
             finally
             {
