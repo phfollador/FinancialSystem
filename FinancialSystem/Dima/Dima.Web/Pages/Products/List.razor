@@ -22,13 +22,15 @@
                                 @product.Price.ToString("C")
                             </MudText>
                         </div>
-                        <MudList Class="mx-auto mt-4" Style="width: 300px">
-                            <MudListItem Icon="@Icons.Material.Filled.Check">Transações ilimitadas</MudListItem>
-                            <MudListItem Icon="@Icons.Material.Filled.Check">Categorias ilimitadas</MudListItem>
-                            <MudListItem Icon="@Icons.Material.Filled.Check">Acesso completo</MudListItem>
+                        <MudList T="string" Class="mx-auto mt-4" Style="width: 300px">
+                            <MudListItem Icon="@Icons.Material.Filled.Check" Text="Transações ilimitadas" />
+                            <MudListItem Icon="@Icons.Material.Filled.Check" Text="Categorias ilimitadas" />
+                            <MudListItem Icon="@Icons.Material.Filled.Check" Text="Acesso completo" />
                         </MudList>
                     </MudCardContent>
-                    <MudCardActions></MudCardActions>
+                    <MudCardActions Class="d-flex justify-content-center">
+                        <MudButton Href="@($"/checkout/{product.Slug}")" Variant="Variant.Filled" Color="Color.Primary" Size="Size.Large">COMEÇAR AGORA</MudButton>
+                    </MudCardActions>
                 </MudCard>
             </MudItem>
         }
