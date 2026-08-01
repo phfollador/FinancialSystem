@@ -1,6 +1,8 @@
-﻿namespace Dima.Web.Pages.Orders
+﻿using Microsoft.AspNetCore.Components;
+
+namespace Dima.Web.Pages.Orders
 {
-    public class CheckoutOrderPage
+    public class CheckoutOrderPage : ComponentBase
     {
     }
 }
