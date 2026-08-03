@@ -4,7 +4,14 @@ namespace Dima.Web.Pages.Orders
 {
     public partial class CheckoutOrderPage : ComponentBase
     {
-        #region
+        #region Parameters
+
+        [Parameter]
+        public string ProductSlug { get; set; } = string.Empty;
+
+        [SupplyParameterFromQuery]
+        public string? VoucherNumber { get; set; }
+
         #endregion
     }
 }
