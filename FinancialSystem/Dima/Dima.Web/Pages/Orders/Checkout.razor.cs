@@ -9,7 +9,7 @@ namespace Dima.Web.Pages.Orders
         [Parameter]
         public string ProductSlug { get; set; } = string.Empty;
 
-        [SupplyParameterFromQuery]
+        [SupplyParameterFromQuery(Name = "voucher")]
         public string? VoucherNumber { get; set; }
 
         #endregion
