@@ -13,5 +13,8 @@ namespace Dima.Web.Pages.Orders
         public string? VoucherNumber { get; set; }
 
         #endregion
+
+        #region Properties
+        #endregion
     }
 }
