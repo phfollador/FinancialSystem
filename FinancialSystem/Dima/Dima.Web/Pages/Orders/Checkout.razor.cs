@@ -1,4 +1,6 @@
-﻿using Microsoft.AspNetCore.Components;
+﻿using Dima.Core.Models;
+using Dima.Core.Requests.Orders;
+using Microsoft.AspNetCore.Components;
 
 namespace Dima.Web.Pages.Orders
 {
@@ -15,6 +17,14 @@ namespace Dima.Web.Pages.Orders
         #endregion
 
         #region Properties
+
+        public bool IsBusy { get; set; } = false;
+        public bool IsValid { get; set; }
+        public CreateOrderRequest InputModel { get; set; }  = new();
+        public Product? Product { get; set; }
+        public Voucher? Voucher { get; set; }
+        public decimal Total { get; set; }
+
         #endregion
     }
 }
