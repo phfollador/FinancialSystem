@@ -1,6 +1,8 @@
-﻿using Dima.Core.Models;
+﻿using Dima.Core.Handlers;
+using Dima.Core.Models;
 using Dima.Core.Requests.Orders;
 using Microsoft.AspNetCore.Components;
+using MudBlazor;
 
 namespace Dima.Web.Pages.Orders
 {
@@ -28,6 +30,18 @@ namespace Dima.Web.Pages.Orders
         #endregion
 
         #region Services
+
+        [Inject]
+        public IProductHandler ProductHandler { get; set; } = null!;
+        [Inject]
+        public IOrderHandler OrderHandler { get; set; } = null!;
+        [Inject]
+        public IVoucherHandler VoucherHandler { get; set; } = null!;
+        [Inject]
+        public NavigationManager NavigationManager { get; set; } = null!;
+        [Inject]
+        public ISnackbar Snackbar { get; set; } = null!;
+
         #endregion
     }
 }
