@@ -43,5 +43,8 @@ namespace Dima.Web.Pages.Orders
         public ISnackbar Snackbar { get; set; } = null!;
 
         #endregion
+
+        #region Methods
+        #endregion
     }
 }
