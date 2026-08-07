@@ -45,6 +45,56 @@ namespace Dima.Web.Pages.Orders
         #endregion
 
         #region Methods
+
+        protected override async Task OnInitializedAsync()
+        {
+            // recuperar o produto
+            try
+            {
+                var result = await ProductHandler.GetBySlugAsync(new GetProductBySlugRequest
+                {
+                    Slug = ProductSlug
+                });
+
+                if (!result.IsSuccess)
+                {
+                    Snackbar.Add("Nao foi possivel obter o produto", Severity.Error);
+                    IsValid = false;
+                    return;
+                }
+
+                Product = result.Data;
+            }
+            catch
+            {
+                Snackbar.Add("Nao foi possivel obter o produto", Severity.Error);
+                IsValid = false;
+                return;
+            }
+
+            if(Product is null)
+            {
+                Snackbar.Add("Nao foi possivel obter o produto", Severity.Error);
+                IsValid = false;
+                return;
+            }
+
+            if(string.IsNullOrEmpty(VoucherNumber) == false)
+            {
+                try 
+                {
+
+                }
+                catch
+                {
+
+                }
+
+            }
+
+            // recuperar o voucher
+        }
+
         #endregion
     }
 }
