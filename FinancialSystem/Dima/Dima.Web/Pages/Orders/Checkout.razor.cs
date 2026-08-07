@@ -79,20 +79,39 @@ namespace Dima.Web.Pages.Orders
                 return;
             }
 
-            if(string.IsNullOrEmpty(VoucherNumber) == false)
+            // recuperar o voucher
+            if (string.IsNullOrEmpty(VoucherNumber) == false)
             {
                 try 
                 {
+                    var result = await VoucherHandler.GetByNumberAsync(new GetVoucherByNumberRequest
+                    {
+                        Number = VoucherNumber.Replace("-", "")
+                    });
 
+                    if (!result.IsSuccess)
+                    {
+                        VoucherNumber = string.Empty;
+                        Snackbar.Add("Nao foi possivel obter o voucher", Severity.Error);
+                    }
+
+                    if(result.Data is null)
+                    {
+                        VoucherNumber = string.Empty;
+                        Snackbar.Add("Nao foi possivel obter o voucher", Severity.Error);
+                    }
+
+                    Voucher = result.Data;
                 }
                 catch
                 {
-
+                    VoucherNumber = string.Empty;
+                    Snackbar.Add("Nao foi possivel obter o voucher", Severity.Error);
                 }
-
             }
 
-            // recuperar o voucher
+            IsValid = true;
+            Total = Product.Price - (Voucher?.Amount ?? 0);
         }
 
         #endregion
