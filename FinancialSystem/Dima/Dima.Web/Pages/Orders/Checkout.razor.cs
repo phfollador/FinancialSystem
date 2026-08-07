@@ -26,5 +26,8 @@ namespace Dima.Web.Pages.Orders
         public decimal Total { get; set; }
 
         #endregion
+
+        #region Services
+        #endregion
     }
 }
