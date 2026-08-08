@@ -10,7 +10,7 @@
                     <MudListItem Icon="@Icons.Material.Filled.Star">
                         <MudText>@Product?.Price</MudText>
                         <MudText Inline="true" Class="ml-auto">
-
+                            @Product?.Price.ToString("C")
                         </MudText>
                     </MudListItem>
                 </MudList>
