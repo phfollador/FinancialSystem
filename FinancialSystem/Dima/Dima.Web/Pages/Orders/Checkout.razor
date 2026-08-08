@@ -13,8 +13,21 @@
                             @Product?.Price.ToString("C")
                         </MudText>
                     </MudListItem>
+                    <MudDivider/>
+                    <MudDivider/>
+                    <div class="mt-auto">
+                        <MudText>Total: </MudText>
+                        <MudText Class="ml-auto">
+                            <strong>
+                                @Total.ToString("C")
+                            </strong>
+                        </MudText>
+                    </div>
                 </MudList>
             </MudPaper>
+            <MudButton Variant="Variant.Filled" Color="Color.Primary" DDisabled="@(!IsValid)" Size="Size.Large" Class="mt-6" FullWidth="true">
+                FINALIZAR PEDIDO
+            </MudButton>
         </MudItem>
     </MudGrid>
 </MudContainer>
