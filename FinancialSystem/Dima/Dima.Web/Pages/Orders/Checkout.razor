@@ -14,6 +14,16 @@
                         </MudText>
                     </MudListItem>
                     <MudDivider/>
+                    <MudListItem Icon="@(Voucher is null ? Icons.Material.Filled.Discount : Icons.Material.Filled.CheckCircle)">
+                        <MudTextField T="string" 
+                            Disabled="@(Voucher is not null)" 
+                            Placeholder="Cupom de desconto" 
+                            @bind-Value="@VoucherNumber" 
+                            Mask="Mask" 
+                            Adornment="Adornment.End" 
+                            AdornmentIcon="@Icons.Material.Filled.FactCheck" 
+                            OnAdornmentClick="@(() => {})"/>
+                    </MudListItem>
                     <MudDivider/>
                     <div class="mt-auto">
                         <MudText>Total: </MudText>
