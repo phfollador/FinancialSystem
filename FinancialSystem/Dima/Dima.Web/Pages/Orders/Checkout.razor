@@ -24,6 +24,14 @@
                             AdornmentIcon="@Icons.Material.Filled.FactCheck" 
                             OnAdornmentClick="@(() => {})"/>
                     </MudListItem>
+                    <MudListItem Icon="@Icons.Material.Filled.MoneyOff">
+                        <div class="d-flex">
+                            <MudText>Desconto</MudText>
+                            <MudText Class="ml-auto">
+                                @(Voucher?.Amount.ToString("C"))
+                            </MudText>
+                        </div>
+                    </MudListItem>
                     <MudDivider/>
                     <div class="mt-auto">
                         <MudText>Total: </MudText>
