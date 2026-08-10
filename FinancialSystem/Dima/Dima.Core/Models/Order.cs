@@ -20,7 +20,7 @@ namespace Dima.Core.Models
         public string UserId { get; set; } = string.Empty;
         public long ProductId { get; set; }
         public Product Product { get; set; } = null!;
-        public long VoucherId { get; set; }
+        public long? VoucherId { get; set; }
         public Voucher Voucher { get; set; } = null!;
 
         public decimal Total => Product.Price - (Voucher?.Amount ?? 0);
