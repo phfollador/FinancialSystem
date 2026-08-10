@@ -63,12 +63,19 @@ namespace Dima.Web.Pages.Orders
                 var request = new CreateOrderRequest
                 {
                     ProductId = Product!.Id,
-                    VoucherId = Voucher?.Id
+                    VoucherId = Voucher?.Id ?? null
                 };
-            }
-            catch
-            {
 
+                var result = await OrderHandler.CreateAsync(request);
+
+                if (result.IsSuccess)
+                    NavigationManager.NavigateTo($"/pedidos/{result.Data!.Number}");
+                else
+                    Snackbar.Add(result.Message, Severity.Error);
+            }
+            catch(Exception ex)
+            {
+                Snackbar.Add(ex.Message, Severity.Error);
             }
             finally
             {
