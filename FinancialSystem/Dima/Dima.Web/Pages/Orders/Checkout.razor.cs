@@ -54,6 +54,28 @@ namespace Dima.Web.Pages.Orders
 
         #region Methods
 
+        public async Task OnValidSubmitAsync()
+        {
+            IsBusy = true;
+
+            try
+            {
+                var request = new CreateOrderRequest
+                {
+                    ProductId = Product!.Id,
+                    VoucherId = Voucher?.Id
+                };
+            }
+            catch
+            {
+
+            }
+            finally
+            {
+                IsBusy = false;
+            }
+        }
+
         protected override async Task OnInitializedAsync()
         {
             // recuperar o produto
