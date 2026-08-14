@@ -5,5 +5,26 @@
 <br/>
 @if(Order is not null)
 {
-    
+    <h4>Numero do pedido</h4>
+    <p>@Order.Number</p>
+    <br/>
+    <h4>Data do pedido</h4>
+    <p>@Order.CreatedAt.ToString("dd/MM/yyyy")</p>
+    <br />
+    <h4>Ultima atualizacao do pedido</h4>
+    <p>@Order.UpdatedAt.ToString("dd/MM/yyyy")</p>
+    <br />
+    <h4>Produto</h4>
+    <p>@Order.Product.Title</p>
+    <br />
+    <h4>Valor do produto</h4>
+    <p>@Order.Product.Price.ToString("C")</p>
+    <br />
+    <h4>Desconto</h4>
+    <p>@(Order.Voucher is null ? "Nao aplicado" : Order.Voucher.Amount.ToString("C"))</p>
+    <br />
+    <h4>Valor total</h4>
+    <p>@Order.Total.ToString("C")</p>
+    <br />
+    <h4>Situacao do pedido</h4>
 }
