@@ -2,7 +2,7 @@
 
 namespace Dima.Web.Components.Orders
 {
-    public class OrderStatusComponent : ComponentBase
+    public partial class OrderStatusComponent : ComponentBase
     {
     }
 }
