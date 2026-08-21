@@ -1,5 +1,7 @@
-﻿using Dima.Core.Models;
+﻿using Dima.Core.Handlers;
+using Dima.Core.Models;
 using Microsoft.AspNetCore.Components;
+using MudBlazor;
 
 namespace Dima.Web.Components.Orders
 {
@@ -10,6 +12,19 @@ namespace Dima.Web.Components.Orders
         [Parameter]
         [EditorRequired]
         public Order Order { get; set; } = null!;
+
+        #endregion
+
+        #region Services
+
+        [Inject]
+        public IDialogService DialogService { get; set; } = null!;
+
+        [Inject]
+        public IOrderHandler OrderHandler { get; set; } = null!;
+
+        [Inject]
+        public ISnackbar Snackbar { get; set; } = null!;
 
         #endregion
     }
