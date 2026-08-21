@@ -27,5 +27,14 @@ namespace Dima.Web.Components.Orders
         public ISnackbar Snackbar { get; set; } = null!;
 
         #endregion
+
+        #region Public Methods
+
+        public async void OnCancelButtonClicked()
+        {
+
+        }
+
+        #endregion
     }
 }
