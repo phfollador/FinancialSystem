@@ -1,1 +1,14 @@
 ﻿@inherits OrderActionComponent
+
+@switch (Order.Status)
+{
+    case EOrderStatus.Paid:
+        break;
+
+    case EOrderStatus.WaitingPayment:
+        break;
+
+    default:
+    <MudText></MudText>
+    break;
+}
