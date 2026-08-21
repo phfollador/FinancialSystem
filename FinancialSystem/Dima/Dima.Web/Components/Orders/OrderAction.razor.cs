@@ -1,5 +1,6 @@
 ﻿using Dima.Core.Handlers;
 using Dima.Core.Models;
+using Dima.Core.Requests.Orders;
 using Microsoft.AspNetCore.Components;
 using MudBlazor;
 
@@ -32,7 +33,30 @@ namespace Dima.Web.Components.Orders
 
         public async void OnCancelButtonClicked()
         {
+            bool? result = await DialogService.ShowMessageBox("ATENÇÃO", "Deseja realmente cancelar esse pedido?", "SIM", "NÃO");
 
+            if (result is not null && result == true)
+                await CancelOrderAsync();
+        }
+
+        #endregion
+
+        #region Private Methods
+
+        private async Task CancelOrderAsync()
+        {
+            var request = new CancelOrderRequest
+            {
+                Id = Order.Id
+            };
+
+            var result = await OrderHandler.CancelAsync(request);
+            if (result.IsSuccess)
+            {
+
+            }
+            else
+                Snackbar.Add(result.Message, Severity.Error);
         }
 
         #endregion
