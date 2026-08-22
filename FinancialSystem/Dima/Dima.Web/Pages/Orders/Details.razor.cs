@@ -52,8 +52,9 @@ namespace Dima.Web.Pages.Orders
 
         #region Methods
 
-        public void RefreshOrderStatus()
+        public void RefreshOrderStatus(Order order)
         {
+            Order = order;
             StateHasChanged();
         }
 
