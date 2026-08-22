@@ -53,7 +53,7 @@ namespace Dima.Web.Components.Orders
             var result = await OrderHandler.CancelAsync(request);
             if (result.IsSuccess)
             {
-                Snackbar.Add(result.Message, Severity.Info);
+                StateHasChanged();
             }
             else
                 Snackbar.Add(result.Message, Severity.Error);
