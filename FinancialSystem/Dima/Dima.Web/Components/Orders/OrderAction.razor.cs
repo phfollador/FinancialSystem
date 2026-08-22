@@ -43,6 +43,19 @@ namespace Dima.Web.Components.Orders
                 await CancelOrderAsync();
         }
 
+        public async void OnPayButtonClicked()
+        {
+            await PayOrderAsync();
+        }
+
+        public async void OnRefoundButtonClicked()
+        {
+            bool? result = await DialogService.ShowMessageBox("ATENÇÃO", "Deseja realmente estornar esse pedido?", "SIM", "NÃO");
+
+            if (result is not null && result == true)
+                await RefoundOrderAsync();
+        }
+
         #endregion
 
         #region Private Methods
@@ -56,9 +69,29 @@ namespace Dima.Web.Components.Orders
 
             var result = await OrderHandler.CancelAsync(request);
             if (result.IsSuccess)
-                Parent.RefreshOrderStatus(Order);
+                Parent.RefreshOrderStatus(result.Data!);
             else
-                Snackbar.Add(result.Message, Severity.Error);
+                Snackbar.Add(result.Message!, Severity.Error);
+        }
+
+        private async Task PayOrderAsync()
+        {
+            await Task.Delay(1);
+            Snackbar.Add("Pagamento nao implementado", Severity.Error);
+        }
+
+        private async Task RefoundOrderAsync()
+        {
+            var request = new RefoundOrderRequest
+            {
+                Id = Order.Id
+            };
+
+            var result = await OrderHandler.RefoundAsync(request);
+            if (result.IsSuccess)
+                Parent.RefreshOrderStatus(result.Data!);
+            else
+                Snackbar.Add(result.Message!, Severity.Error);
         }
 
         #endregion
