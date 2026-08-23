@@ -1,14 +1,12 @@
-﻿using Dima.Core.Responses;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using Dima.Core.Requests.Stripe;
+using Dima.Core.Responses;
 
 namespace Dima.Core.Handlers
 {
-    internal interface IStripeHandler
+    public interface IStripeHandler
     {
-        Task<Response<string?>> CreateSessionAsync();
+        Task<Response<string?>> CreateSessionAsync(CreateSessionRequest request);
+
+        Task<Response<string?>> GetTransactionsByOrderNumberAsync(GetTransactionsByOrderNumberRequest request);
     }
 }

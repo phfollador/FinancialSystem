@@ -2,5 +2,6 @@
 {
     public class GetTransactionsByOrderNumberRequest : Request
     {
-    }
+        public string Number { get; set; } = string.Empty;
+    } 
 }
