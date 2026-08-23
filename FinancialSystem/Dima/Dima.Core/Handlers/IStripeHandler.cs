@@ -1,5 +1,6 @@
 ﻿using Dima.Core.Requests.Stripe;
 using Dima.Core.Responses;
+using Dima.Core.Responses.Stripe;
 
 namespace Dima.Core.Handlers
 {
@@ -7,6 +8,6 @@ namespace Dima.Core.Handlers
     {
         Task<Response<string?>> CreateSessionAsync(CreateSessionRequest request);
 
-        Task<Response<string?>> GetTransactionsByOrderNumberAsync(GetTransactionsByOrderNumberRequest request);
+        Task<Response<List<StripeTransactionsResponse>>> GetTransactionsByOrderNumberAsync(GetTransactionsByOrderNumberRequest request);
     }
 }
