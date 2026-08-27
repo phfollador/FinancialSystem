@@ -14,6 +14,7 @@ namespace Dima.Api.Data.Common.Api
             Configuration.ConnectionString = webApplicationBuilder.Configuration.GetConnectionString("DefaultConnection") ?? string.Empty;
             Configuration.BackendUrl = webApplicationBuilder.Configuration.GetValue<string>("BackendUrl") ?? string.Empty;
             Configuration.FrontendUrl = webApplicationBuilder.Configuration.GetValue<string>("FrontendUrl") ?? string.Empty;
+            ApiConfiguration.StripeApiKey = webApplicationBuilder.Configuration.GetValue<string>("StripeApiKey") ?? string.Empty;
         }
 
         public static void AddDocumentation(this WebApplicationBuilder webApplicationBuilder)
