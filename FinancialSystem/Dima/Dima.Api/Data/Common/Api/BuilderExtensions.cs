@@ -4,6 +4,7 @@ using Dima.Core;
 using Dima.Core.Handlers;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
+using Stripe;
 
 namespace Dima.Api.Data.Common.Api
 {
@@ -15,6 +16,7 @@ namespace Dima.Api.Data.Common.Api
             Configuration.BackendUrl = webApplicationBuilder.Configuration.GetValue<string>("BackendUrl") ?? string.Empty;
             Configuration.FrontendUrl = webApplicationBuilder.Configuration.GetValue<string>("FrontendUrl") ?? string.Empty;
             ApiConfiguration.StripeApiKey = webApplicationBuilder.Configuration.GetValue<string>("StripeApiKey") ?? string.Empty;
+            StripeConfiguration.ApiKey = ApiConfiguration.StripeApiKey;
         }
 
         public static void AddDocumentation(this WebApplicationBuilder webApplicationBuilder)
