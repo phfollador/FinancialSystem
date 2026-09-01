@@ -29,6 +29,9 @@ namespace Dima.Web.Components.Orders
         public IOrderHandler OrderHandler { get; set; } = null!;
 
         [Inject]
+        public IStripeHandler StripeHandler { get; set; } = null!;
+
+        [Inject]
         public ISnackbar Snackbar { get; set; } = null!;
 
         #endregion
