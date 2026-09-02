@@ -79,8 +79,7 @@ namespace Dima.Web.Components.Orders
 
         private async Task PayOrderAsync()
         {
-            await Task.Delay(1);
-            Snackbar.Add("Pagamento nao implementado", Severity.Error);
+
         }
 
         private async Task RefoundOrderAsync()
