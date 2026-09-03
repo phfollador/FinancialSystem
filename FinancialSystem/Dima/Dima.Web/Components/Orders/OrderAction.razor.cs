@@ -1,6 +1,7 @@
 ﻿using Dima.Core.Handlers;
 using Dima.Core.Models;
 using Dima.Core.Requests.Orders;
+using Dima.Core.Requests.Stripe;
 using Dima.Web.Pages.Orders;
 using Microsoft.AspNetCore.Components;
 using MudBlazor;
@@ -79,7 +80,13 @@ namespace Dima.Web.Components.Orders
 
         private async Task PayOrderAsync()
         {
-
+            var request = new CreateSessionRequest
+            {
+                OrderNumber = Order.Number,
+                OrderTotal = Order.Total,
+                ProductTitle = Order.Product.Title,
+                ProductDescription = Order.Product.Desctiption
+            };
         }
 
         private async Task RefoundOrderAsync()
