@@ -83,7 +83,7 @@ namespace Dima.Web.Components.Orders
             var request = new CreateSessionRequest
             {
                 OrderNumber = Order.Number,
-                OrderTotal = Order.Total,
+                OrderTotal = (int)Math.Round(Order.Total * 100, 2),
                 ProductTitle = Order.Product.Title,
                 ProductDescription = Order.Product.Desctiption
             };
