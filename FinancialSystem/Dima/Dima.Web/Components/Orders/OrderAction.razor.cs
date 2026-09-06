@@ -4,6 +4,7 @@ using Dima.Core.Requests.Orders;
 using Dima.Core.Requests.Stripe;
 using Dima.Web.Pages.Orders;
 using Microsoft.AspNetCore.Components;
+using Microsoft.JSInterop;
 using MudBlazor;
 
 namespace Dima.Web.Components.Orders
@@ -22,6 +23,9 @@ namespace Dima.Web.Components.Orders
         #endregion
 
         #region Services
+
+        [Inject]
+        public IJSRuntime JSRuntime { get; set; } = null!;
 
         [Inject]
         public IDialogService DialogService { get; set; } = null!;
@@ -102,10 +106,13 @@ namespace Dima.Web.Components.Orders
                     Snackbar.Add(result.Message!, Severity.Error);
                     return;
                 }
+
+                await JSRuntime.InvokeVoidAsync("checkout", Configuration.StripePublicKey, result.Data);
             }
             catch
             {
-
+                Snackbar.Add("Nao foi possivel iniciar a sessao com o Stripe", Severity.Error);
+                return;
             }
         }
 
