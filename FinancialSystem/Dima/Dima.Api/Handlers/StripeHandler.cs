@@ -53,7 +53,10 @@ namespace Dima.Api.Handlers
 
         public Task<Response<List<StripeTransactionsResponse>>> GetTransactionsByOrderNumberAsync(GetTransactionsByOrderNumberRequest request)
         {
-            throw new NotImplementedException();
+            var options = new ChargeSearchOptions
+            {
+                Query = $"metadata['order'] : '{request.Number}'"
+            };
         }
     }
 }
