@@ -51,12 +51,35 @@ namespace Dima.Api.Handlers
             return new Response<string?>(session.Id);
         }
 
-        public Task<Response<List<StripeTransactionsResponse>>> GetTransactionsByOrderNumberAsync(GetTransactionsByOrderNumberRequest request)
+        public async Task<Response<List<StripeTransactionsResponse>>> GetTransactionsByOrderNumberAsync(GetTransactionsByOrderNumberRequest request)
         {
             var options = new ChargeSearchOptions
             {
                 Query = $"metadata['order'] : '{request.Number}'"
             };
+
+            var service = new ChargeService();
+            var result = await service.SearchAsync(options);
+
+            if (result.Data.Count == 0)
+                return new Response<List<StripeTransactionsResponse>>(null, 404, "Nenhuma transacao foi encontrada");
+
+            var data = new List<StripeTransactionsResponse>();
+            foreach(var transaction in result.Data)
+            {
+                data.Add(new StripeTransactionsResponse
+                {
+                    Id = transaction.Id,
+                    Email = transaction.BillingDetails.Email,
+                    Amount = transaction.Amount,
+                    AmountCaptured = transaction.AmountCaptured,
+                    Status = transaction.Status,
+                    Paid = transaction.Paid,
+                    Refounded = transaction.Refunded
+                });
+            }
+
+            return new Response<List<StripeTransactionsResponse>>(data);
         }
     }
 }
