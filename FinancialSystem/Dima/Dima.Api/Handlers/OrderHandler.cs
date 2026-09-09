@@ -3,12 +3,13 @@ using Dima.Core.Enums;
 using Dima.Core.Handlers;
 using Dima.Core.Models;
 using Dima.Core.Requests.Orders;
+using Dima.Core.Requests.Stripe;
 using Dima.Core.Responses;
 using Microsoft.EntityFrameworkCore;
 
 namespace Dima.Api.Handlers
 {
-    public class OrderHandler(AppDbContext context) : IOrderHandler
+    public class OrderHandler(AppDbContext context, IStripeHandler stripeHandler) : IOrderHandler
     {
         public async Task<Response<Order?>> CancelAsync(CancelOrderRequest request)
         {
@@ -209,6 +210,28 @@ namespace Dima.Api.Handlers
 
                 default:
                     return new Response<Order?>(order, 400, "Nao foi possivel pagar o pedido");
+            }
+
+            try
+            {
+                var getTransactionsRequest = new GetTransactionsByOrderNumberRequest
+                {
+                    Number = order.Number
+                };
+
+                var result = await stripeHandler.GetTransactionsByOrderNumberAsync(getTransactionsRequest);
+
+                if (result.IsSuccess == false)
+                    return new Response<Order?>(null, 500, "Nao foi possivel realizar o pagamento");
+
+                if(result.Data is null)
+                    return new Response<Order?>(null, 500, "Nao foi possivel realizar o pagamento");
+
+
+            }
+            catch
+            {
+
             }
 
             order.Status = EOrderStatus.Paid;
