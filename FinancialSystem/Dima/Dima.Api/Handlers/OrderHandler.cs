@@ -227,11 +227,17 @@ namespace Dima.Api.Handlers
                 if(result.Data is null)
                     return new Response<Order?>(null, 500, "Nao foi possivel realizar o pagamento");
 
+                if(result.Data.Any(x => x.Refounded))
+                    return new Response<Order?>(null, 500, "Esse pedido ja teve o pagamento informado");
 
+                if(!result.Data.Any(x => x.Paid))
+                    return new Response<Order?>(null, 500, "Esse pedido nao foi pago");
+
+                request.ExternalReference = result.Data[0].Id;
             }
             catch
             {
-
+                return new Response<Order?>(null, 500, "Nao foi possivel dar baixa no seu pedido");
             }
 
             order.Status = EOrderStatus.Paid;
