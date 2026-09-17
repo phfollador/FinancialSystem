@@ -33,9 +33,22 @@ namespace Dima.Web.Pages.Orders
 
         #region Overrides
 
-        protected override async Task OnInitialized()
+        protected override async Task OnInitializedAsync()
         {
-            
+            var request = new PayOrderRequest
+            {
+                Number = Number
+            };
+
+            var result = await OrderHandler.PayAsync(request);
+            if(result.IsSuccess == false)
+            {
+                Snackbar.Add(result.Message!, Severity.Error);
+                return;
+            }
+
+            Order = result.Data;
+            Snackbar.Add(result.Message!, Severity.Success);
         }
 
         #endregion
